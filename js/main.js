@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
       intro.classList.add('hide');
       sessionStorage.setItem('ja_intro_seen', '1');
       document.body.style.overflow = '';
-      setTimeout(function () { intro.remove(); }, 900);
+      setTimeout(function () { if (intro.parentNode) intro.remove(); }, 900);
     };
     if (alreadySeen) {
       intro.remove();
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.style.overflow = 'hidden';
       var skipBtn = intro.querySelector('.intro__skip');
       if (skipBtn) skipBtn.addEventListener('click', closeIntro);
-      setTimeout(closeIntro, 3100);
+      setTimeout(closeIntro, 6400);
     }
   }
 
@@ -37,20 +37,85 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---- Révélation au scroll ---- */
-  var revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && revealEls.length) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
+  /* ---- En-tête qui se resserre au scroll ---- */
+  var header = document.querySelector('.site-header');
+  if (header) {
+    var onScroll = function () {
+      if (window.scrollY > 60) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* ---- Révélation au scroll (fiable : seuil bas + filet de sécurité) ---- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+  // Étage les cartes d'une même grille pour un effet de cascade
+  document.querySelectorAll('.grid').forEach(function (grid) {
+    Array.prototype.forEach.call(grid.children, function (child, i) {
+      child.style.transitionDelay = Math.min(i * 90, 360) + 'ms';
+    });
+  });
+
+  function showEl(el) { el.classList.add('in'); }
+
+  if (revealEls.length) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            showEl(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.01, rootMargin: '0px 0px -2% 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+
+      // filet de sécurité : si un élément est déjà dans la fenêtre au chargement
+      // (ou si l'observer tarde), on le révèle sans attendre
+      revealEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) showEl(el);
       });
-    }, { threshold: 0.15 });
-    revealEls.forEach(function (el) { io.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      revealEls.forEach(showEl);
+    }
+    // filet de sécurité final : personne ne doit rester invisible
+    setTimeout(function () { revealEls.forEach(showEl); }, 2500);
+  }
+
+  /* ---- Compteurs animés ---- */
+  var counters = document.querySelectorAll('[data-count]');
+  if (counters.length) {
+    var animateCount = function (el) {
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      var start = null;
+      var duration = 1400;
+      function step(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(step);
+    };
+    if ('IntersectionObserver' in window) {
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            animateCount(entry.target);
+            cio.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      counters.forEach(function (el) { cio.observe(el); });
+    } else {
+      counters.forEach(animateCount);
+    }
   }
 
   /* ---- Année dans le pied de page ---- */

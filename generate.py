@@ -6,30 +6,21 @@ import os
 OUT = os.path.dirname(os.path.abspath(__file__))
 
 # ---------------------------------------------------------------- images ---
+# Photos réelles des formations JA IMAGE / Ciné Court School (fournies par l'association)
 IMG = {
-    'hero':            'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1800&q=80&auto=format&fit=crop',
-    'audience':        'https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?w=1200&q=80&auto=format&fit=crop',
-    'camera_hand':     'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=1000&q=80&auto=format&fit=crop',
-    'clapper_gear':    'https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=1000&q=80&auto=format&fit=crop',
-    'vintage_cam':     'https://images.unsplash.com/photo-1517697471339-4aa32003c11a?w=1000&q=80&auto=format&fit=crop',
-    'popcorn_theatre': 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1000&q=80&auto=format&fit=crop',
-    'portrait_1':      'https://images.unsplash.com/photo-1571847140471-1d7766e825ea?w=800&q=80&auto=format&fit=crop',
-    'set_filming':     'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1000&q=80&auto=format&fit=crop',
-    'group_people':    'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=1000&q=80&auto=format&fit=crop',
-    'portrait_3':      'https://images.unsplash.com/photo-1596727147705-61a532a659bd?w=800&q=80&auto=format&fit=crop',
-    'clapper_2':       'https://images.unsplash.com/photo-1554941829-202a0b2403b8?w=1000&q=80&auto=format&fit=crop',
-    'film_reel':       'https://images.unsplash.com/photo-1533106418989-88406c7cc8ca?w=1000&q=80&auto=format&fit=crop',
-    'workshop_laptop': 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&q=80&auto=format&fit=crop',
-    'group_smile':     'https://images.unsplash.com/photo-1531058020387-3be344556be6?w=1000&q=80&auto=format&fit=crop',
-    'portrait_woman1': 'https://images.unsplash.com/photo-1594751543129-6701ad444259?w=800&q=80&auto=format&fit=crop',
-    'group_meeting':   'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1000&q=80&auto=format&fit=crop',
-    'portrait_man1':   'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=80&auto=format&fit=crop',
-    'presenting':      'https://images.unsplash.com/photo-1560184611-ff3e53f00e8f?w=1000&q=80&auto=format&fit=crop',
-    'crowd_event':     'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1000&q=80&auto=format&fit=crop',
-    'portrait_man2':   'https://images.unsplash.com/photo-1551038247-3d9af20df552?w=800&q=80&auto=format&fit=crop',
-    'group_laptop':    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1000&q=80&auto=format&fit=crop',
-    'portrait_woman2': 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80&auto=format&fit=crop',
+    'group_library':      'assets/photos/group_library.jpg',
+    'classroom_camop':     'assets/photos/classroom_camop.jpg',
+    'camera_training':     'assets/photos/camera_training.jpg',
+    'desks_snacks':        'assets/photos/desks_snacks.jpg',
+    'adults_table':        'assets/photos/adults_table.jpg',
+    'landscape':           'assets/photos/landscape.jpg',
+    'portrait_boubou':     'assets/photos/portrait_boubou.jpg',
+    'classroom_wide1':     'assets/photos/classroom_wide1.jpg',
+    'classroom_flipchart': 'assets/photos/classroom_flipchart.jpg',
+    'classroom_banner':    'assets/photos/classroom_banner.jpg',
+    'classroom_boubou2':   'assets/photos/classroom_boubou2.jpg',
 }
+LOGO_CCS = 'assets/photos/logo_ccs.png'
 
 FORM_EMAIL = "contact@jaimage.ml"  # placeholder — à remplacer par la vraie adresse
 
@@ -132,8 +123,8 @@ def footer():
       </div>
       <div>
         <h4>Contact</h4>
-        <a href="#">Hamdalaye, Bamako, Mali</a>
-        <a href="tel:+22300000000">+223 00 00 00 00</a>
+        <a href="#">Bamako, Mali</a>
+        <a href="tel:+22374609109">+223 74 60 91 09</a>
         <a href="mailto:{FORM_EMAIL}">{FORM_EMAIL}</a>
         <a href="#">Facebook · Instagram</a>
       </div>
@@ -148,6 +139,7 @@ def footer():
 
 
 INTRO = """<div class="intro">
+  <div class="intro__flicker"></div>
   <div class="intro__beam"></div>
   <div class="intro__grain"></div>
   <div class="intro__content">
@@ -197,7 +189,7 @@ def pagehero(eyebrow, title_html, lead):
 def build_index():
     body = f"""
 <section class="hero">
-  <div class="hero__bg" style="--img:url('{IMG['hero']}')"></div>
+  <div class="hero__bg" style="background:linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.55) 55%, #0c0c10 100%), url('{IMG['group_library']}') center/cover no-repeat;"></div>
   <div class="hero__figs"><img src="assets/logo.png" alt=""></div>
   <div class="container hero__inner">
     <p class="eyebrow">Association JA IMAGE — Cinéma malien &amp; africain, Bamako</p>
@@ -210,6 +202,12 @@ def build_index():
   </div>
 </section>
 
+<div class="marquee">
+  <div class="marquee__track">
+    {"".join(f"<span>{t} <b style='opacity:.45'>✶</b></span>" for t in ["Cinéma malien &amp; africain","Ciné Court School","Autodidactes","Bamako, Mali"]*2)}
+  </div>
+</div>
+
 <section class="reveal">
   <div class="container two-col">
     <div>
@@ -219,10 +217,10 @@ def build_index():
     <div>
       <p>JA IMAGE réunit un public curieux et des cinéastes en apprentissage autour d'une même idée : le cinéma se transmet aussi par la pratique, la projection et la rencontre — pas seulement par les bancs d'une école.</p>
       <div class="stats" style="margin-top:32px;">
-        <div class="stat"><b>120+</b><span>Autodidactes accompagnés</span></div>
-        <div class="stat"><b>40</b><span>Projections organisées</span></div>
-        <div class="stat"><b>15</b><span>Ateliers &amp; résidences</span></div>
-        <div class="stat"><b>8</b><span>Pays représentés à l'écran</span></div>
+        <div class="stat"><b data-count="120" data-suffix="+">0</b><span>Autodidactes accompagnés</span></div>
+        <div class="stat"><b data-count="40">0</b><span>Projections organisées</span></div>
+        <div class="stat"><b data-count="15">0</b><span>Ateliers &amp; résidences</span></div>
+        <div class="stat"><b data-count="8">0</b><span>Pays représentés à l'écran</span></div>
       </div>
     </div>
   </div>
@@ -251,13 +249,13 @@ def build_index():
     </div>
     <div class="grid grid--3">
       <div>
-        <div class="imgcard"><img src="{IMG['set_filming']}" alt="Tournage"><div class="imgcard__label"><span class="tag">Ciné-club</span><h3>Séance mensuelle de courts-métrages africains</h3></div></div>
+        <div class="imgcard"><img src="{IMG['camera_training']}" alt="Tournage"><div class="imgcard__label"><span class="tag">Ciné-club</span><h3>Séance mensuelle de courts-métrages africains</h3></div></div>
       </div>
       <div>
-        <div class="imgcard"><img src="{IMG['workshop_laptop']}" alt="Atelier montage"><div class="imgcard__label"><span class="tag">Atelier</span><h3>Initiation au montage pour débutants</h3></div></div>
+        <div class="imgcard"><img src="{IMG['classroom_flipchart']}" alt="Atelier montage"><div class="imgcard__label"><span class="tag">Atelier</span><h3>Initiation au montage pour débutants</h3></div></div>
       </div>
       <div>
-        <a href="concours.html"><div class="imgcard"><img src="{IMG['group_smile']}" alt="Ciné Court School"><div class="imgcard__label"><span class="tag">Concours annuel</span><h3>Ciné Court School — le concours des élèves cinéastes</h3></div></div></a>
+        <a href="concours.html"><div class="imgcard"><img src="{IMG['classroom_banner']}" alt="Ciné Court School"><div class="imgcard__label"><span class="tag">Concours annuel</span><h3>Ciné Court School — le concours des élèves cinéastes</h3></div></div></a>
       </div>
     </div>
     <p style="margin-top:32px;"><a href="programmes.html" class="btn btn--outline">Voir tous les programmes</a></p>
@@ -312,7 +310,7 @@ def build_association():
 
 <section class="reveal">
   <div class="container two-col">
-    <img src="{IMG['group_meeting']}" alt="Rencontre de l'équipe JA IMAGE">
+    <img src="{IMG['adults_table']}" alt="Réunion de l'équipe JA IMAGE">
     <div>
       <p class="eyebrow">Notre histoire</p>
       <h2 style="font-size:34px;">Une salle, une caméra, une communauté</h2>
@@ -355,15 +353,15 @@ def build_association():
 <section class="section--tinted reveal">
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">L'équipe</p>
+      <p class="eyebrow">Sur le terrain</p>
       <h2>Celles et ceux qui font JA IMAGE</h2>
-      <p>Une petite équipe, portée par des bénévoles et des cinéastes engagés. <em>(Contenu provisoire à personnaliser.)</em></p>
+      <p>Une équipe de formateurs, bénévoles et mentors, en action lors de nos ateliers et séances Ciné Court School.</p>
     </div>
     <div class="grid grid--4">
-      <div class="member"><div class="photo"><img src="{IMG['portrait_woman1']}" alt="Portrait"></div><h3>Aïssata Diarra</h3><p class="role">Présidente</p></div>
-      <div class="member"><div class="photo"><img src="{IMG['portrait_man1']}" alt="Portrait"></div><h3>Moussa Traoré</h3><p class="role">Coordinateur des programmes</p></div>
-      <div class="member"><div class="photo"><img src="{IMG['portrait_woman2']}" alt="Portrait"></div><h3>Fatoumata Coulibaly</h3><p class="role">Responsable formation</p></div>
-      <div class="member"><div class="photo"><img src="{IMG['portrait_man2']}" alt="Portrait"></div><h3>Ibrahim Keïta</h3><p class="role">Chargé de communication</p></div>
+      <div class="member"><div class="photo"><img src="{IMG['portrait_boubou']}" alt="Formateur JA IMAGE en atelier"></div><h3>Formation</h3><p class="role">Encadrement des ateliers</p></div>
+      <div class="member"><div class="photo"><img src="{IMG['classroom_camop']}" alt="Prise de vue en atelier"></div><h3>Prise de vue</h3><p class="role">Accompagnement technique</p></div>
+      <div class="member"><div class="photo"><img src="{IMG['adults_table']}" alt="Réunion de l'équipe"></div><h3>Coordination</h3><p class="role">Pilotage des programmes</p></div>
+      <div class="member"><div class="photo"><img src="{IMG['classroom_flipchart']}" alt="Atelier pédagogique"></div><h3>Pédagogie</h3><p class="role">Suivi des autodidactes</p></div>
     </div>
   </div>
 </section>
@@ -387,15 +385,15 @@ def build_programmes():
   <div class="container">
     <div class="grid grid--3">
       <div>
-        <div class="imgcard"><img src="{IMG['set_filming']}" alt="Ciné-clubs"><div class="imgcard__label"><span class="tag">Diffusion</span><h3>Ciné-clubs &amp; projections</h3></div></div>
+        <div class="imgcard"><img src="{IMG['camera_training']}" alt="Ciné-clubs"><div class="imgcard__label"><span class="tag">Diffusion</span><h3>Ciné-clubs &amp; projections</h3></div></div>
         <p style="margin-top:14px;color:var(--gris-fonce);">Des séances régulières, en salle ou en plein air, pour découvrir le cinéma africain et international et en discuter ensemble.</p>
       </div>
       <div>
-        <div class="imgcard"><img src="{IMG['group_smile']}" alt="Résidences et ateliers"><div class="imgcard__label"><span class="tag">Rencontre</span><h3>Résidences &amp; ateliers</h3></div></div>
+        <div class="imgcard"><img src="{IMG['classroom_banner']}" alt="Résidences et ateliers"><div class="imgcard__label"><span class="tag">Rencontre</span><h3>Résidences &amp; ateliers</h3></div></div>
         <p style="margin-top:14px;color:var(--gris-fonce);">Des temps courts et intensifs pour écrire, tourner ou monter, encadrés par des cinéastes expérimentés.</p>
       </div>
       <div>
-        <div class="imgcard"><img src="{IMG['workshop_laptop']}" alt="Suivi individualisé"><div class="imgcard__label"><span class="tag">Accompagnement</span><h3>Suivi individualisé des autodidactes</h3></div></div>
+        <div class="imgcard"><img src="{IMG['classroom_flipchart']}" alt="Suivi individualisé"><div class="imgcard__label"><span class="tag">Accompagnement</span><h3>Suivi individualisé des autodidactes</h3></div></div>
         <p style="margin-top:14px;color:var(--gris-fonce);">Un mentorat personnalisé pour les autodidactes qui veulent aller plus loin sur un projet précis.</p>
       </div>
     </div>
@@ -448,7 +446,7 @@ def build_formation():
 
 <section class="section--dark reveal">
   <div class="container two-col">
-    <img src="{IMG['vintage_cam']}" alt="Matériel de formation">
+    <img src="{IMG['classroom_camop']}" alt="Matériel de formation">
     <div>
       <p class="eyebrow">Format des sessions</p>
       <h2 style="font-size:32px;">Petits groupes, mentors, projet concret</h2>
@@ -510,7 +508,7 @@ def build_ressources():
       <p class="eyebrow">Rejoindre l'espace autodidactes</p>
       <h2 style="font-size:32px;">Dites-nous où vous en êtes</h2>
       <p>Que vous débutiez avec votre téléphone ou que vous ayez déjà tourné un premier court-métrage, l'accompagnement s'adapte à votre niveau.</p>
-      <img src="{IMG['clapper_gear']}" alt="Matériel de tournage" style="border-radius:2px;margin-top:24px;">
+      <img src="{IMG['classroom_banner']}" alt="Matériel de tournage" style="border-radius:2px;margin-top:24px;">
     </div>
     <form class="form-panel" action="https://formsubmit.co/{FORM_EMAIL}" method="POST">
       <input type="hidden" name="_subject" value="Nouvelle inscription — Espace autodidactes JA IMAGE">
@@ -541,15 +539,15 @@ def build_ressources():
 
 def build_actualites():
     articles = [
-        (IMG['camera_hand'], "12 juillet 2026", "Un nouveau ciné-club mensuel à Bamako",
+        (IMG['classroom_camop'], "12 juillet 2026", "Un nouveau ciné-club mensuel à Bamako",
          "JA IMAGE lance une séance récurrente dédiée aux courts-métrages africains, ouverte à tous les publics, avec un temps d'échange après chaque projection."),
-        (IMG['clapper_2'], "28 juin 2026", "Cinq courts-métrages africains à voir cette année",
+        (IMG['classroom_boubou2'], "28 juin 2026", "Cinq courts-métrages africains à voir cette année",
          "Notre sélection de films marquants portés par une nouvelle génération de cinéastes du continent."),
-        (IMG['workshop_laptop'], "15 juin 2026", "Retour sur notre atelier montage de printemps",
+        (IMG['classroom_flipchart'], "15 juin 2026", "Retour sur notre atelier montage de printemps",
          "Douze autodidactes ont terminé leur premier montage encadré en trois semaines, avec restitution publique."),
-        (IMG['crowd_event'], "2 juin 2026", "JA IMAGE partenaire d'un festival régional",
+        (IMG['adults_table'], "2 juin 2026", "JA IMAGE partenaire d'un festival régional",
          "L'association s'associe à un festival de cinéma régional pour présenter les projets de ses autodidactes."),
-        (IMG['group_smile'], "20 mai 2026", "Trois autodidactes présentent leur premier court-métrage",
+        (IMG['group_library'], "20 mai 2026", "Trois autodidactes présentent leur premier court-métrage",
          "Un aboutissement pour trois membres accompagnés depuis un an, dont les films seront projetés en ciné-club."),
     ]
     items = "\n".join(f"""
@@ -578,15 +576,15 @@ def build_actualites():
 
 def build_galerie():
     items = [
-        (IMG['hero'], "Projections", "Séance en salle"),
-        (IMG['audience'], "Projections", "Public en séance"),
-        (IMG['popcorn_theatre'], "Projections", "Avant la séance"),
-        (IMG['set_filming'], "Tournages", "En plein tournage"),
-        (IMG['clapper_gear'], "Tournages", "Prêts pour la première prise"),
-        (IMG['film_reel'], "Tournages", "Retour à la pellicule"),
-        (IMG['workshop_laptop'], "Ateliers", "Atelier montage"),
-        (IMG['group_laptop'], "Ateliers", "Travail en groupe"),
-        (IMG['crowd_event'], "Événements", "Rencontre publique"),
+        (IMG['group_library'], "Événements", "Promo Ciné Court School"),
+        (IMG['classroom_camop'], "Ateliers", "Prise en main caméra"),
+        (IMG['camera_training'], "Tournages", "En plein exercice pratique"),
+        (IMG['classroom_flipchart'], "Ateliers", "Atelier pédagogique"),
+        (IMG['classroom_wide1'], "Ateliers", "Séance de formation"),
+        (IMG['classroom_banner'], "Ateliers", "Présentation JA IMAGE"),
+        (IMG['classroom_boubou2'], "Ateliers", "Échanges en groupe"),
+        (IMG['desks_snacks'], "Ateliers", "Pause pendant la session"),
+        (IMG['adults_table'], "Événements", "Réunion de l'équipe"),
     ]
     cards = "\n".join(f"""
       <div class="imgcard"><img src="{img}" alt="{title}"><div class="imgcard__label"><span class="tag">{tag}</span><h3>{title}</h3></div></div>""" for img, tag, title in items)
@@ -597,7 +595,7 @@ def build_galerie():
 <section class="reveal">
   <div class="container">
     <div class="tag-row">
-      <span class="tag">Projections</span><span class="tag">Ateliers</span><span class="tag">Tournages</span><span class="tag">Événements</span>
+      <span class="tag">Ateliers</span><span class="tag">Tournages</span><span class="tag">Événements</span>
     </div>
     <div class="grid grid--3">
       {cards}
@@ -639,7 +637,7 @@ def build_partenaires():
       <p>Prêt de salle, mécénat de matériel, soutien financier ou visibilité média : chaque forme de partenariat aide directement les autodidactes accompagnés par JA IMAGE.</p>
       <a href="contact.html" class="btn btn--primary" style="margin-top:12px;">Nous contacter</a>
     </div>
-    <img src="{IMG['crowd_event']}" alt="Événement JA IMAGE">
+    <img src="{IMG['adults_table']}" alt="Réunion JA IMAGE">
   </div>
 </section>
 """
@@ -656,11 +654,11 @@ def build_contact():
     <div>
       <p class="eyebrow">Nos coordonnées</p>
       <h2 style="font-size:32px;">Venez nous voir</h2>
-      <p style="color:var(--gris-fonce);">Adresse : Hamdalaye, Bamako, Mali <em>(à préciser)</em><br>
-      Téléphone : +223 00 00 00 00 <em>(à préciser)</em><br>
+      <p style="color:var(--gris-fonce);">Adresse : Bamako, Mali <em>(adresse précise à confirmer)</em><br>
+      Téléphone : +223 74 60 91 09<br>
       Email : {FORM_EMAIL}<br>
       Réseaux : Facebook · Instagram</p>
-      <img src="{IMG['group_laptop']}" alt="Équipe JA IMAGE" style="border-radius:2px;margin-top:24px;">
+      <img src="{IMG['landscape']}" alt="Bamako, Mali" style="border-radius:2px;margin-top:24px;">
     </div>
     <form class="form-panel" action="https://formsubmit.co/{FORM_EMAIL}" method="POST">
       <input type="hidden" name="_subject" value="Nouveau message — Site JA IMAGE">
@@ -691,13 +689,16 @@ def build_contact():
 def build_concours():
     body = f"""
 <section class="pagehero">
-  <div class="container">
-    <p class="eyebrow">Concours annuel</p>
-    <h1>CINÉ COURT <em>SCHOOL</em></h1>
-    <p>Le concours annuel de courts-métrages de JA IMAGE, ouvert aux élèves maliens qui veulent raconter une histoire à l'image — du collège au lycée.</p>
-    <div class="btn-row" style="margin-top:26px;">
-      <a href="#inscription" class="btn btn--primary">Inscrire mon établissement</a>
-      <a href="#reglement" class="btn btn--outline">Voir le règlement</a>
+  <div class="container" style="display:flex;gap:36px;align-items:flex-end;flex-wrap:wrap;">
+    <div class="ccs-badge"><img src="{LOGO_CCS}" alt="Logo Ciné Court School"></div>
+    <div style="flex:1;min-width:260px;">
+      <p class="eyebrow">Concours annuel</p>
+      <h1>CINÉ COURT <em>SCHOOL</em></h1>
+      <p>Le concours annuel de courts-métrages de JA IMAGE, ouvert aux élèves maliens qui veulent raconter une histoire à l'image — du collège au lycée.</p>
+      <div class="btn-row" style="margin-top:26px;">
+        <a href="#inscription" class="btn btn--primary">Inscrire mon établissement</a>
+        <a href="#reglement" class="btn btn--outline">Voir le règlement</a>
+      </div>
     </div>
   </div>
   <div class="bogolan-band" style="position:absolute;left:0;right:0;bottom:0;"></div>
@@ -705,7 +706,7 @@ def build_concours():
 
 <section class="reveal">
   <div class="container two-col">
-    <img src="{IMG['set_filming']}" alt="Tournage d'élèves">
+    <img src="{IMG['group_library']}" alt="Élèves Ciné Court School">
     <div>
       <p class="eyebrow">Le concours</p>
       <h2 style="font-size:32px;">Filmer dès l'école, avec ce qu'on a sous la main</h2>
@@ -771,9 +772,9 @@ def build_concours():
       <h2>Ce que les élèves ont déjà tourné</h2>
     </div>
     <div class="grid grid--3">
-      <div class="imgcard"><img src="{IMG['group_smile']}" alt="Édition précédente"><div class="imgcard__label"><span class="tag">Édition 2025</span><h3>Remise des prix</h3></div></div>
-      <div class="imgcard"><img src="{IMG['workshop_laptop']}" alt="Édition précédente"><div class="imgcard__label"><span class="tag">Édition 2025</span><h3>Atelier de préparation</h3></div></div>
-      <div class="imgcard"><img src="{IMG['crowd_event']}" alt="Édition précédente"><div class="imgcard__label"><span class="tag">Édition 2025</span><h3>Projection publique</h3></div></div>
+      <div class="imgcard"><img src="{IMG['classroom_wide1']}" alt="Édition précédente"><div class="imgcard__label"><span class="tag">Édition 2025</span><h3>Séance de formation</h3></div></div>
+      <div class="imgcard"><img src="{IMG['classroom_flipchart']}" alt="Édition précédente"><div class="imgcard__label"><span class="tag">Édition 2025</span><h3>Atelier de préparation</h3></div></div>
+      <div class="imgcard"><img src="{IMG['desks_snacks']}" alt="Édition précédente"><div class="imgcard__label"><span class="tag">Édition 2025</span><h3>Entre deux séances</h3></div></div>
     </div>
   </div>
 </section>

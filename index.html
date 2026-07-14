@@ -13,6 +13,7 @@
 </head>
 <body>
 <div class="intro">
+  <div class="intro__flicker"></div>
   <div class="intro__beam"></div>
   <div class="intro__grain"></div>
   <div class="intro__content">
@@ -48,7 +49,7 @@
 </header>
 
 <section class="hero">
-  <div class="hero__bg" style="--img:url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1800&q=80&auto=format&fit=crop')"></div>
+  <div class="hero__bg" style="background:linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.55) 55%, #0c0c10 100%), url('assets/photos/group_library.jpg') center/cover no-repeat;"></div>
   <div class="hero__figs"><img src="assets/logo.png" alt=""></div>
   <div class="container hero__inner">
     <p class="eyebrow">Association JA IMAGE — Cinéma malien &amp; africain, Bamako</p>
@@ -61,6 +62,12 @@
   </div>
 </section>
 
+<div class="marquee">
+  <div class="marquee__track">
+    <span>Cinéma malien &amp; africain <b style='opacity:.45'>✶</b></span><span>Ciné Court School <b style='opacity:.45'>✶</b></span><span>Autodidactes <b style='opacity:.45'>✶</b></span><span>Bamako, Mali <b style='opacity:.45'>✶</b></span><span>Cinéma malien &amp; africain <b style='opacity:.45'>✶</b></span><span>Ciné Court School <b style='opacity:.45'>✶</b></span><span>Autodidactes <b style='opacity:.45'>✶</b></span><span>Bamako, Mali <b style='opacity:.45'>✶</b></span>
+  </div>
+</div>
+
 <section class="reveal">
   <div class="container two-col">
     <div>
@@ -70,10 +77,10 @@
     <div>
       <p>JA IMAGE réunit un public curieux et des cinéastes en apprentissage autour d'une même idée : le cinéma se transmet aussi par la pratique, la projection et la rencontre — pas seulement par les bancs d'une école.</p>
       <div class="stats" style="margin-top:32px;">
-        <div class="stat"><b>120+</b><span>Autodidactes accompagnés</span></div>
-        <div class="stat"><b>40</b><span>Projections organisées</span></div>
-        <div class="stat"><b>15</b><span>Ateliers &amp; résidences</span></div>
-        <div class="stat"><b>8</b><span>Pays représentés à l'écran</span></div>
+        <div class="stat"><b data-count="120" data-suffix="+">0</b><span>Autodidactes accompagnés</span></div>
+        <div class="stat"><b data-count="40">0</b><span>Projections organisées</span></div>
+        <div class="stat"><b data-count="15">0</b><span>Ateliers &amp; résidences</span></div>
+        <div class="stat"><b data-count="8">0</b><span>Pays représentés à l'écran</span></div>
       </div>
     </div>
   </div>
@@ -102,13 +109,13 @@
     </div>
     <div class="grid grid--3">
       <div>
-        <div class="imgcard"><img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1000&q=80&auto=format&fit=crop" alt="Tournage"><div class="imgcard__label"><span class="tag">Ciné-club</span><h3>Séance mensuelle de courts-métrages africains</h3></div></div>
+        <div class="imgcard"><img src="assets/photos/camera_training.jpg" alt="Tournage"><div class="imgcard__label"><span class="tag">Ciné-club</span><h3>Séance mensuelle de courts-métrages africains</h3></div></div>
       </div>
       <div>
-        <div class="imgcard"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1000&q=80&auto=format&fit=crop" alt="Atelier montage"><div class="imgcard__label"><span class="tag">Atelier</span><h3>Initiation au montage pour débutants</h3></div></div>
+        <div class="imgcard"><img src="assets/photos/classroom_flipchart.jpg" alt="Atelier montage"><div class="imgcard__label"><span class="tag">Atelier</span><h3>Initiation au montage pour débutants</h3></div></div>
       </div>
       <div>
-        <a href="concours.html"><div class="imgcard"><img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=1000&q=80&auto=format&fit=crop" alt="Ciné Court School"><div class="imgcard__label"><span class="tag">Concours annuel</span><h3>Ciné Court School — le concours des élèves cinéastes</h3></div></div></a>
+        <a href="concours.html"><div class="imgcard"><img src="assets/photos/classroom_banner.jpg" alt="Ciné Court School"><div class="imgcard__label"><span class="tag">Concours annuel</span><h3>Ciné Court School — le concours des élèves cinéastes</h3></div></div></a>
       </div>
     </div>
     <p style="margin-top:32px;"><a href="programmes.html" class="btn btn--outline">Voir tous les programmes</a></p>
@@ -176,8 +183,8 @@
       </div>
       <div>
         <h4>Contact</h4>
-        <a href="#">Hamdalaye, Bamako, Mali</a>
-        <a href="tel:+22300000000">+223 00 00 00 00</a>
+        <a href="#">Bamako, Mali</a>
+        <a href="tel:+22374609109">+223 74 60 91 09</a>
         <a href="mailto:contact@jaimage.ml">contact@jaimage.ml</a>
         <a href="#">Facebook · Instagram</a>
       </div>
