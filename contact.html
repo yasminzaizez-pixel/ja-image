@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — JA IMAGE</title>
+<meta name="description" content="Contactez l'association JA IMAGE à Bamako : adhésion, programmes, partenariats.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="JA IMAGE">
+      <span>ja <em>image</em></span>
+    </a>
+    <nav class="nav-list">
+        <a href="index.html">Accueil</a>
+        <a href="association.html">Association</a>
+        <a href="programmes.html">Programmes</a>
+        <a href="concours.html" class="flagship">Ciné Court School</a>
+        <a href="actualites.html">Actualités</a>
+        <a href="galerie.html">Galerie</a>
+        <a href="contact.html" class="nav-cta">Nous rejoindre</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="pagehero">
+  <div class="container">
+    <p class="eyebrow">Prise de contact</p>
+    <h1>CONTACT</h1>
+    <p>Une question, un projet, une envie de rejoindre l'association ? Écrivez-nous.</p>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="container two-col">
+    <div>
+      <p class="eyebrow">Nos coordonnées</p>
+      <h2 style="font-size:32px;">Venez nous voir</h2>
+      <p style="color:var(--gris-fonce);">Adresse : Hamdalaye, Bamako, Mali <em>(à préciser)</em><br>
+      Téléphone : +223 00 00 00 00 <em>(à préciser)</em><br>
+      Email : contact@jaimage.ml<br>
+      Réseaux : Facebook · Instagram</p>
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1000&q=80&auto=format&fit=crop" alt="Équipe JA IMAGE" style="border-radius:2px;margin-top:24px;">
+    </div>
+    <form class="form-panel" action="https://formsubmit.co/contact@jaimage.ml" method="POST">
+      <input type="hidden" name="_subject" value="Nouveau message — Site JA IMAGE">
+      <input type="text" name="_honey" style="display:none">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="field"><label for="c-nom">Nom</label><input id="c-nom" name="Nom" type="text" required></div>
+      <div class="field"><label for="c-email">Email</label><input id="c-email" name="Email" type="email" required></div>
+      <div class="field">
+        <label for="c-sujet">Sujet</label>
+        <select id="c-sujet" name="Sujet">
+          <option>Adhésion</option>
+          <option>Programme autodidactes</option>
+          <option>Partenariat</option>
+          <option>Presse</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="Message" required></textarea></div>
+      <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;">Envoyer le message</button>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="JA IMAGE">
+        <p>Association pour la promotion du cinéma africain et international, et l'accompagnement des cinéastes autodidactes. Basée à Bamako, Mali.</p>
+      </div>
+      <div>
+        <h4>Association</h4>
+        <a href="association.html">Qui sommes-nous</a>
+        <a href="partenaires.html">Partenaires</a>
+        <a href="actualites.html">Actualités</a>
+        <a href="galerie.html">Galerie</a>
+      </div>
+      <div>
+        <h4>Autodidactes</h4>
+        <a href="programmes.html">Programmes</a>
+        <a href="formation.html">Formation</a>
+        <a href="ressources.html">Espace autodidactes</a>
+        <a href="concours.html">Ciné Court School</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="#">Hamdalaye, Bamako, Mali</a>
+        <a href="tel:+22300000000">+223 00 00 00 00</a>
+        <a href="mailto:contact@jaimage.ml">contact@jaimage.ml</a>
+        <a href="#">Facebook · Instagram</a>
+      </div>
+    </div>
+    <div class="bogolan-band" style="margin-bottom:24px;"></div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> JA IMAGE — Bamako, Mali</span>
+      <span>Contenu provisoire — site en construction</span>
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
