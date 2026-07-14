@@ -19,6 +19,15 @@ IMG = {
     'classroom_flipchart': 'assets/photos/classroom_flipchart.jpg',
     'classroom_banner':    'assets/photos/classroom_banner.jpg',
     'classroom_boubou2':   'assets/photos/classroom_boubou2.jpg',
+    'certificate_ceremony':'assets/photos/certificate_ceremony.jpg',
+    'boubou_gesture2':     'assets/photos/boubou_gesture2.jpg',
+    'adults_table2':       'assets/photos/adults_table2.jpg',
+    'outdoor_filming':     'assets/photos/outdoor_filming.jpg',
+    'students_qa':         'assets/photos/students_qa.jpg',
+    'speaker_mic':         'assets/photos/speaker_mic.jpg',
+    'camera_artwall':      'assets/photos/camera_artwall.jpg',
+    'camera_mentorship':   'assets/photos/camera_mentorship.jpg',
+    'hilltop_camera':      'assets/photos/hilltop_camera.jpg',
 }
 LOGO_CCS = 'assets/photos/logo_ccs.png'
 
@@ -385,7 +394,7 @@ def build_programmes():
   <div class="container">
     <div class="grid grid--3">
       <div>
-        <div class="imgcard"><img src="{IMG['camera_training']}" alt="Ciné-clubs"><div class="imgcard__label"><span class="tag">Diffusion</span><h3>Ciné-clubs &amp; projections</h3></div></div>
+        <div class="imgcard"><img src="{IMG['hilltop_camera']}" alt="Ciné-clubs"><div class="imgcard__label"><span class="tag">Diffusion</span><h3>Ciné-clubs &amp; projections</h3></div></div>
         <p style="margin-top:14px;color:var(--gris-fonce);">Des séances régulières, en salle ou en plein air, pour découvrir le cinéma africain et international et en discuter ensemble.</p>
       </div>
       <div>
@@ -446,7 +455,7 @@ def build_formation():
 
 <section class="section--dark reveal">
   <div class="container two-col">
-    <img src="{IMG['classroom_camop']}" alt="Matériel de formation">
+    <img src="{IMG['camera_mentorship']}" alt="Mentorat caméra">
     <div>
       <p class="eyebrow">Format des sessions</p>
       <h2 style="font-size:32px;">Petits groupes, mentors, projet concret</h2>
@@ -458,6 +467,17 @@ def build_formation():
         <li>— Un projet concret à la clé, présenté en ciné-club</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="container two-col">
+    <div>
+      <p class="eyebrow">À la clé</p>
+      <h2 style="font-size:32px;">Une attestation de fin de formation</h2>
+      <p>Chaque module se termine par une remise d'attestation, lors d'une petite cérémonie avec les autres autodidactes de la session. De quoi valoriser le chemin parcouru — et le montrer.</p>
+    </div>
+    <img src="{IMG['certificate_ceremony']}" alt="Remise d'attestation">
   </div>
 </section>
 
@@ -539,6 +559,8 @@ def build_ressources():
 
 def build_actualites():
     articles = [
+        (IMG['certificate_ceremony'], "14 juillet 2026", "Remise d'attestations pour nos autodidactes",
+         "Une nouvelle session de formation s'est conclue par une cérémonie de remise d'attestations, entre autodidactes et formateurs."),
         (IMG['classroom_camop'], "12 juillet 2026", "Un nouveau ciné-club mensuel à Bamako",
          "JA IMAGE lance une séance récurrente dédiée aux courts-métrages africains, ouverte à tous les publics, avec un temps d'échange après chaque projection."),
         (IMG['classroom_boubou2'], "28 juin 2026", "Cinq courts-métrages africains à voir cette année",
@@ -576,15 +598,21 @@ def build_actualites():
 
 def build_galerie():
     items = [
+        (IMG['hilltop_camera'], "Tournages", "Prise de vue en hauteur, Bamako"),
+        (IMG['certificate_ceremony'], "Événements", "Remise d'attestations"),
         (IMG['group_library'], "Événements", "Promo Ciné Court School"),
+        (IMG['outdoor_filming'], "Tournages", "Tournage en extérieur"),
+        (IMG['students_qa'], "Ateliers", "Question de la salle"),
+        (IMG['camera_mentorship'], "Ateliers", "Mentorat caméra"),
         (IMG['classroom_camop'], "Ateliers", "Prise en main caméra"),
         (IMG['camera_training'], "Tournages", "En plein exercice pratique"),
         (IMG['classroom_flipchart'], "Ateliers", "Atelier pédagogique"),
+        (IMG['camera_artwall'], "Tournages", "Interview en intérieur"),
+        (IMG['speaker_mic'], "Événements", "Prise de parole"),
         (IMG['classroom_wide1'], "Ateliers", "Séance de formation"),
         (IMG['classroom_banner'], "Ateliers", "Présentation JA IMAGE"),
-        (IMG['classroom_boubou2'], "Ateliers", "Échanges en groupe"),
+        (IMG['adults_table2'], "Événements", "Réunion de l'équipe"),
         (IMG['desks_snacks'], "Ateliers", "Pause pendant la session"),
-        (IMG['adults_table'], "Événements", "Réunion de l'équipe"),
     ]
     cards = "\n".join(f"""
       <div class="imgcard"><img src="{img}" alt="{title}"><div class="imgcard__label"><span class="tag">{tag}</span><h3>{title}</h3></div></div>""" for img, tag, title in items)

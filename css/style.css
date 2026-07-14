@@ -26,7 +26,7 @@
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; overflow-x:hidden; }
 body{
   margin:0;
   background:var(--ecran);
@@ -179,6 +179,10 @@ button{ font-family:inherit; cursor:pointer; }
 .rule-list li:last-child{ border-bottom:1px solid rgba(247,244,236,.1); }
 .rule-list b{ font-family:var(--label); color:var(--or-projecteur); font-size:14px; letter-spacing:.06em; min-width:150px; }
 .rule-list span{ color:var(--gris-pellicule); }
+@media (max-width:560px){
+  .rule-list li{ flex-direction:column; gap:6px; }
+  .rule-list b{ min-width:0; }
+}
 .site-header{
   position:fixed; top:0; left:0; right:0; z-index:500;
   background:rgba(12,12,16,.92);
@@ -387,6 +391,13 @@ button{ font-family:inherit; cursor:pointer; }
 .hero .btn-row{ display:flex; gap:16px; margin-top:30px; flex-wrap:wrap; }
 .hero .btn--outline{ color:var(--ecran); border-color:var(--ecran); }
 .hero .btn--outline:hover{ background:var(--ecran); color:var(--noir-salle); }
+@media (max-width:700px){
+  .hero{ padding-top:120px; min-height:auto; }
+  .hero__inner{ padding-bottom:56px; }
+  .hero__figs{ display:none; }
+  section{ padding:64px 0; }
+  .pagehero{ padding:132px 0 46px; }
+}
 
 /* generic page hero (secondary pages) */
 .pagehero{
@@ -413,7 +424,12 @@ section{ padding:96px 0; }
 .grid--2{ grid-template-columns:repeat(2,1fr); }
 .grid--3{ grid-template-columns:repeat(3,1fr); }
 .grid--4{ grid-template-columns:repeat(4,1fr); }
-@media (max-width:920px){ .grid--2,.grid--3,.grid--4{ grid-template-columns:1fr; } }
+@media (max-width:1024px) and (min-width:701px){
+  .grid--3, .grid--4{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:700px){
+  .grid--2,.grid--3,.grid--4{ grid-template-columns:1fr; gap:22px; }
+}
 
 .card{
   background:var(--ecran); border:1px solid rgba(12,12,16,.09);
@@ -505,6 +521,7 @@ section{ padding:96px 0; }
 
 /* partners */
 .partners-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+@media (max-width:1024px) and (min-width:761px){ .partners-grid{ grid-template-columns:repeat(3,1fr); } }
 @media (max-width:760px){ .partners-grid{ grid-template-columns:repeat(2,1fr); } }
 .partner-card{
   display:flex; align-items:center; justify-content:center; text-align:center;
