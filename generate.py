@@ -3,7 +3,9 @@
 """Générateur du site multipage JA IMAGE."""
 import os
 
+import time
 OUT = os.path.dirname(os.path.abspath(__file__))
+ASSET_V = str(int(time.time()))  # invalide le cache navigateur/CDN à chaque régénération
 
 # ---------------------------------------------------------------- images ---
 # Photos réelles des formations JA IMAGE / Ciné Court School (fournies par l'association)
@@ -98,6 +100,34 @@ def reel_svg(extra_class=""):
 </svg>"""
 
 
+def hero_reel(photo_keys):
+    """Bobine avec un ruban de pellicule (vraies photos) qui s'en échappe en éventail.
+    Toujours dans le flux de la hero — ne dépend d'aucune largeur d'écran."""
+    import math
+    n = len(photo_keys)
+    r_start, r_end = 80, 258
+    a_start, a_end = 190, 253
+    size_start, size_end = 56, 90
+    frames = []
+    for i, key in enumerate(photo_keys):
+        t = i / (n - 1)
+        r = r_start + (r_end - r_start) * t
+        a = math.radians(a_start + (a_end - a_start) * t)
+        x = r * math.cos(a)
+        y = r * math.sin(a)
+        size = size_start + (size_end - size_start) * t
+        rot = math.degrees(a) + 90
+        frames.append(
+            f'<div class="hero-reel__frame" style="'
+            f'--x:{x:.1f}px; --y:{y:.1f}px; --rot:{rot:.1f}deg; --size:{size:.0f}px; --i:{i};">'
+            f'<img src="{IMG[key]}" alt=""></div>'
+        )
+    return f"""<div class="hero-reel">
+  <div class="hero-reel__frames">{"".join(frames)}</div>
+  <div class="hero-reel__hub">{reel_svg()}</div>
+</div>"""
+
+
 def head(title, desc):
     return f"""<head>
 <meta charset="UTF-8">
@@ -108,7 +138,7 @@ def head(title, desc):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v={ASSET_V}">
 </head>"""
 
 
@@ -214,7 +244,7 @@ def page(filename, title, desc, body, with_intro=False):
 {header(filename)}
 {body}
 {footer()}
-<script src="js/main.js"></script>
+<script src="js/main.js?v={ASSET_V}"></script>
 </body>
 </html>"""
     with open(os.path.join(OUT, filename), "w", encoding="utf-8") as f:
@@ -245,7 +275,7 @@ def build_index():
 {reel_strip}
 <section class="hero">
   <div class="hero__bg" style="background:linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.55) 55%, #0c0c10 100%), url('{IMG['group_library']}') center/cover no-repeat;"></div>
-  <div class="hero__figs"><img src="assets/logo.png" alt=""></div>
+  {hero_reel(['camera_training','classroom_camop','outdoor_filming','students_qa','hilltop_camera'])}
   <div class="container hero__inner">
     <p class="eyebrow">Association JA IMAGE — Cinéma malien &amp; africain, Bamako</p>
     <h1>L'ÉCRAN COMME <em>ÉCOLE</em></h1>
