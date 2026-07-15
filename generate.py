@@ -86,11 +86,15 @@ ACTIVE_PARENT = {
 def reel_svg(extra_class=""):
     cls = f"reel reel--spin {extra_class}".strip()
     return f"""<svg class="{cls}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="50" cy="50" r="45" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
-  <circle cx="50" cy="50" r="12" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
-  <circle cx="50" cy="17" r="8.5" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
-  <circle cx="78" cy="66" r="8.5" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
-  <circle cx="22" cy="66" r="8.5" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
+  <circle cx="50" cy="50" r="46" fill="var(--noir-salle-2)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="50" cy="50" r="13" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="50" cy="50" r="4" fill="var(--or-projecteur)"/>
+  <circle cx="50" cy="19" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="76.8" cy="34.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="76.8" cy="65.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="50" cy="81" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="23.2" cy="65.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="23.2" cy="34.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
 </svg>"""
 
 

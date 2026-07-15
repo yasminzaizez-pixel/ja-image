@@ -246,14 +246,23 @@ button{ font-family:inherit; cursor:pointer; }
 }
 
 /* ---------- Bobine de film (icône réutilisable, tourne en continu) ---------- */
-.reel{ display:block; }
+.reel{ display:block; filter:drop-shadow(0 4px 14px rgba(0,0,0,.4)); }
 .reel--spin{ animation:reelSpin 6s linear infinite; }
 @keyframes reelSpin{ to{ transform:rotate(360deg); } }
 
-.intro__reel-row{ display:flex; align-items:center; justify-content:center; gap:18px; }
-.intro__reel-row .reel{ width:56px; height:56px; opacity:0; animation:fadeUp .6s ease .1s forwards, reelSpin 6s linear infinite; flex-shrink:0; }
+.intro__reel-row{ display:flex; align-items:center; justify-content:center; gap:26px; position:relative; }
+.intro__reel-row::before{
+  content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:70%; height:3px; background:linear-gradient(90deg, transparent, rgba(242,194,48,.5) 20%, rgba(242,194,48,.5) 80%, transparent);
+  z-index:-1; opacity:0; animation:fadeUp .6s ease .1s forwards;
+}
+.intro__reel-row .reel{ width:92px; height:92px; opacity:0; animation:fadeUp .6s ease .1s forwards, reelSpin 5s linear infinite; flex-shrink:0; }
+@media (max-width:700px){
+  .intro__reel-row{ gap:14px; }
+  .intro__reel-row .reel{ width:52px; height:52px; }
+}
 @media (max-width:560px){
-  .intro__reel-row .reel{ width:30px; height:30px; }
+  .intro__reel-row .reel{ width:44px; height:44px; }
   .intro__stage{ width:min(58vw,320px); }
 }
 
@@ -372,30 +381,30 @@ button{ font-family:inherit; cursor:pointer; }
 
 /* ---------- Bobine verticale (bande de pellicule le long de l'accueil) ---------- */
 .reel-strip{
-  position:fixed; top:112px; right:22px; bottom:22px; width:60px; z-index:60;
+  position:fixed; top:98px; right:14px; bottom:16px; width:46px; z-index:60;
   display:flex; flex-direction:column; align-items:center; pointer-events:none;
 }
-.reel-strip .reel{ width:48px; height:48px; margin-bottom:10px; flex-shrink:0; filter:drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
+.reel-strip .reel{ width:40px; height:40px; margin-bottom:8px; flex-shrink:0; }
+.reel-strip .reel.reel--spin{ animation:none; } /* rotation pilotée par le scroll en JS */
 .reel-strip__window{
-  flex:1; width:100%; border-radius:12px; overflow:hidden; position:relative;
+  flex:1; width:100%; border-radius:10px; overflow:hidden; position:relative;
   background:var(--noir-salle); box-shadow:var(--shadow-soft);
-  -webkit-mask-image:linear-gradient(180deg, transparent 0, black 30px, black calc(100% - 30px), transparent 100%);
-          mask-image:linear-gradient(180deg, transparent 0, black 30px, black calc(100% - 30px), transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+          mask-image:linear-gradient(180deg, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
 }
-.reel-strip__track{ display:flex; flex-direction:column; animation:reelFeed 40s linear infinite; }
-.reel-strip__frame{ width:100%; aspect-ratio:3/4; position:relative; padding:0 10px 10px; }
+.reel-strip__track{ display:flex; flex-direction:column; will-change:transform; }
+.reel-strip__frame{ width:100%; aspect-ratio:3/4; position:relative; padding:0 7px 8px; }
 .reel-strip__frame img{ width:100%; height:100%; object-fit:cover; border-radius:3px; display:block; }
 .reel-strip__frame::before,.reel-strip__frame::after{
-  content:""; position:absolute; top:0; bottom:10px; width:10px;
-  background-image:radial-gradient(circle, var(--or-projecteur) 2px, transparent 2.4px);
-  background-size:10px 18px; background-repeat:repeat-y; background-position:center;
+  content:""; position:absolute; top:0; bottom:8px; width:7px;
+  background-image:radial-gradient(circle, var(--or-projecteur) 1.6px, transparent 2px);
+  background-size:7px 15px; background-repeat:repeat-y; background-position:center;
   opacity:.6;
 }
 .reel-strip__frame::before{ left:0; }
 .reel-strip__frame::after{ right:0; }
-@keyframes reelFeed{ from{ transform:translateY(0);} to{ transform:translateY(-50%);} }
-@media (max-width:1480px){ .reel-strip{ display:none; } }
-@media (prefers-reduced-motion:reduce){ .reel-strip__track{ animation:none; } }
+@media (max-width:1300px){ .reel-strip{ display:none; } }
+@media (prefers-reduced-motion:reduce){ .reel-strip .reel{ animation:none !important; } }
 
 /* ---------- Hero ---------- */
 .hero{

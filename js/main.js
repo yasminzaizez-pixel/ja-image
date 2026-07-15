@@ -118,6 +118,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  /* ---- Bobine verticale : tourne et avance avec le scroll de la page ---- */
+  var reelStrip = document.querySelector('.reel-strip');
+  if (reelStrip) {
+    var reelIcon = reelStrip.querySelector('.reel');
+    var track = reelStrip.querySelector('.reel-strip__track');
+    var ticking = false;
+    var updateReel = function () {
+      var doc = document.documentElement;
+      var scrollTop = window.scrollY || doc.scrollTop;
+      var maxScroll = (doc.scrollHeight - window.innerHeight) || 1;
+      var fraction = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
+      if (reelIcon) reelIcon.style.transform = 'rotate(' + (fraction * 1080) + 'deg)';
+      if (track) track.style.transform = 'translateY(' + (-fraction * 50) + '%)';
+      ticking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(updateReel); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', updateReel);
+    updateReel();
+  }
+
   /* ---- Année dans le pied de page ---- */
   document.querySelectorAll('.year').forEach(function (el) {
     el.textContent = new Date().getFullYear();
