@@ -43,7 +43,7 @@ ORG = {
     "telephone_href": "+22374609109",
 }
 
-FORM_EMAIL = "contact@jaimage.ml"  # placeholder — à remplacer par la vraie adresse (à confirmer avec Zaide, voir note)
+FORM_EMAIL = "contactdja.image@gmail.com"  # confirmé par Zaide — adresse réelle de l'association
 
 # Nav complète (utilisée pour le pied de page / sitemap)
 NAV = [
@@ -82,6 +82,17 @@ ACTIVE_PARENT = {
 }
 
 # ------------------------------------------------------------- fragments ---
+
+def reel_svg(extra_class=""):
+    cls = f"reel reel--spin {extra_class}".strip()
+    return f"""<svg class="{cls}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="45" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
+  <circle cx="50" cy="50" r="12" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
+  <circle cx="50" cy="17" r="8.5" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
+  <circle cx="78" cy="66" r="8.5" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
+  <circle cx="22" cy="66" r="8.5" fill="none" stroke="var(--or-projecteur)" stroke-width="4"/>
+</svg>"""
+
 
 def head(title, desc):
     return f"""<head>
@@ -166,17 +177,21 @@ def footer():
 </footer>"""
 
 
-INTRO = """<div class="intro">
+INTRO = f"""<div class="intro">
   <div class="intro__flicker"></div>
   <div class="intro__beam"></div>
   <div class="intro__grain"></div>
   <div class="intro__content">
-    <div class="intro__stage">
-      <div class="intro__flash"></div>
-      <img class="piece piece--black" src="assets/fig_black.png" alt="">
-      <img class="piece piece--red" src="assets/fig_red.png" alt="">
-      <img class="piece piece--yellow" src="assets/fig_yellow.png" alt="">
-      <img class="piece piece--purple" src="assets/fig_purple.png" alt="JA IMAGE">
+    <div class="intro__reel-row">
+      {reel_svg()}
+      <div class="intro__stage">
+        <div class="intro__flash"></div>
+        <img class="piece piece--black" src="assets/fig_black.png" alt="">
+        <img class="piece piece--red" src="assets/fig_red.png" alt="">
+        <img class="piece piece--yellow" src="assets/fig_yellow.png" alt="">
+        <img class="piece piece--purple" src="assets/fig_purple.png" alt="JA IMAGE">
+      </div>
+      {reel_svg()}
     </div>
     <div class="intro__tagline">Cinéma malien &amp; africain · Bamako</div>
     <div class="intro__bar"></div>
@@ -215,7 +230,15 @@ def pagehero(eyebrow, title_html, lead):
 # ================================================================ ACCUEIL ==
 
 def build_index():
+    strip_photos = ['camera_training','classroom_camop','outdoor_filming','hilltop_camera',
+                     'students_qa','camera_mentorship','classroom_wide1','speaker_mic']
+    strip_frames = "".join(f'<div class="reel-strip__frame"><img src="{IMG[k]}" alt=""></div>' for k in strip_photos * 2)
+    reel_strip = f"""<div class="reel-strip">
+  {reel_svg()}
+  <div class="reel-strip__window"><div class="reel-strip__track">{strip_frames}</div></div>
+</div>"""
     body = f"""
+{reel_strip}
 <section class="hero">
   <div class="hero__bg" style="background:linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.55) 55%, #0c0c10 100%), url('{IMG['group_library']}') center/cover no-repeat;"></div>
   <div class="hero__figs"><img src="assets/logo.png" alt=""></div>
@@ -745,7 +768,7 @@ def build_contact():
       <h2 style="font-size:32px;">Venez nous voir</h2>
       <p style="color:var(--gris-fonce);">Adresse : {ORG['adresse']}<br>
       Téléphone : {ORG['telephone']}<br>
-      Email : {FORM_EMAIL} <em>(à confirmer)</em><br>
+      Email : {FORM_EMAIL}<br>
       Réseaux : Facebook · Instagram</p>
       <p style="margin-top:16px;font-style:italic;color:var(--gris-fonce);">« {ORG['devise']} » — {ORG['slogan']}</p>
       <img src="{IMG['landscape']}" alt="Bamako, Mali" style="border-radius:2px;margin-top:24px;">
