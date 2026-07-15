@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.style.overflow = 'hidden';
       var skipBtn = intro.querySelector('.intro__skip');
       if (skipBtn) skipBtn.addEventListener('click', closeIntro);
-      setTimeout(closeIntro, 6400);
+      setTimeout(closeIntro, 5500);
     }
   }
 
@@ -118,26 +118,72 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /* ---- Bobine verticale : tourne et avance avec le scroll de la page ---- */
-  var reelStrip = document.querySelector('.reel-strip');
-  if (reelStrip) {
-    var reelIcon = reelStrip.querySelector('.reel');
-    var track = reelStrip.querySelector('.reel-strip__track');
-    var ticking = false;
-    var updateReel = function () {
-      var doc = document.documentElement;
-      var scrollTop = window.scrollY || doc.scrollTop;
-      var maxScroll = (doc.scrollHeight - window.innerHeight) || 1;
-      var fraction = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
-      if (reelIcon) reelIcon.style.transform = 'rotate(' + (fraction * 1080) + 'deg)';
-      if (track) track.style.transform = 'translateY(' + (-fraction * 50) + '%)';
-      ticking = false;
+  /* ---- Bobine 3D interactive : glisser / cliquer / toucher pour tourner ---- */
+  var wheelRing = document.getElementById('wheel3d-ring');
+  if (wheelRing) {
+    var wItems = wheelRing.children.length;
+    var wStep = 360 / wItems;
+    var wAngle = 0;
+    var wDragging = false;
+    var wDragged = false;
+    var wStartX = 0, wStartAngle = 0;
+    var wAutoTimer = null;
+    var wResumeTimer = null;
+    var wSnapTimer = null;
+
+    var wApply = function () { wheelRing.style.transform = 'rotateY(' + wAngle + 'deg)'; };
+    var wAutoSpin = function () {
+      wAngle += 0.045;
+      wApply();
+      wAutoTimer = requestAnimationFrame(wAutoSpin);
     };
-    window.addEventListener('scroll', function () {
-      if (!ticking) { requestAnimationFrame(updateReel); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', updateReel);
-    updateReel();
+    var wStopAuto = function () { if (wAutoTimer) cancelAnimationFrame(wAutoTimer); wAutoTimer = null; };
+    var wScheduleResume = function () {
+      clearTimeout(wResumeTimer);
+      wResumeTimer = setTimeout(function () { if (!wDragging) wAutoSpin(); }, 3200);
+    };
+    var wAnimateTo = function (target, duration) {
+      if (wSnapTimer) cancelAnimationFrame(wSnapTimer);
+      var from = wAngle, delta = target - from, start = null;
+      function step (ts) {
+        if (!start) start = ts;
+        var t = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - t, 3);
+        wAngle = from + delta * eased;
+        wApply();
+        if (t < 1) wSnapTimer = requestAnimationFrame(step);
+      }
+      wSnapTimer = requestAnimationFrame(step);
+    };
+    var wDown = function (x) {
+      wDragging = true; wDragged = false; wStartX = x; wStartAngle = wAngle;
+      wStopAuto(); clearTimeout(wResumeTimer);
+      if (wSnapTimer) cancelAnimationFrame(wSnapTimer);
+      wheelRing.classList.add('dragging');
+    };
+    var wMove = function (x) {
+      if (!wDragging) return;
+      var dx = x - wStartX;
+      if (Math.abs(dx) > 4) wDragged = true;
+      wAngle = wStartAngle + dx * 0.5;
+      wApply();
+    };
+    var wUp = function () {
+      if (!wDragging) return;
+      wDragging = false;
+      wheelRing.classList.remove('dragging');
+      var target = wDragged ? Math.round(wAngle / wStep) * wStep : Math.round(wAngle / wStep) * wStep + wStep;
+      wAnimateTo(target, 500);
+      wScheduleResume();
+    };
+    wheelRing.addEventListener('mousedown', function (e) { wDown(e.clientX); e.preventDefault(); });
+    window.addEventListener('mousemove', function (e) { wMove(e.clientX); });
+    window.addEventListener('mouseup', wUp);
+    wheelRing.addEventListener('touchstart', function (e) { wDown(e.touches[0].clientX); }, { passive: true });
+    wheelRing.addEventListener('touchmove', function (e) { wMove(e.touches[0].clientX); }, { passive: true });
+    wheelRing.addEventListener('touchend', wUp);
+    wApply();
+    wAutoSpin();
   }
 
   /* ---- Année dans le pied de page ---- */
@@ -172,45 +218,32 @@ document.addEventListener('DOMContentLoaded', function () {
       el.addEventListener('mouseleave', function () { ring.classList.remove('hover'); });
     });
 
-    /* -- Inclinaison 3D au survol (cartes, images, partenaires) -- */
+    /* -- Inclinaison 3D légère au survol (cartes, images, partenaires) -- */
     var tiltEls = document.querySelectorAll('.card, .imgcard, .partner-card');
     tiltEls.forEach(function (el) {
       el.addEventListener('mousemove', function (e) {
         var r = el.getBoundingClientRect();
         var px = (e.clientX - r.left) / r.width - 0.5;
         var py = (e.clientY - r.top) / r.height - 0.5;
-        var rotX = (py * -8).toFixed(2);
-        var rotY = (px * 10).toFixed(2);
-        el.style.transform = 'perspective(900px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-6px) scale(1.015)';
+        var rotX = (py * -5).toFixed(2);
+        var rotY = (px * 6).toFixed(2);
+        el.style.transform = 'perspective(1000px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-4px)';
       });
       el.addEventListener('mouseleave', function () {
         el.style.transform = '';
       });
     });
 
-    /* -- Boutons magnétiques -- */
+    /* -- Boutons magnétiques (subtils) -- */
     document.querySelectorAll('.btn').forEach(function (btn) {
       btn.addEventListener('mousemove', function (e) {
         var r = btn.getBoundingClientRect();
-        var mx2 = (e.clientX - r.left - r.width / 2) * 0.28;
-        var my2 = (e.clientY - r.top - r.height / 2) * 0.35;
+        var mx2 = (e.clientX - r.left - r.width / 2) * 0.18;
+        var my2 = (e.clientY - r.top - r.height / 2) * 0.24;
         btn.style.transform = 'translate(' + mx2 + 'px,' + my2 + 'px)';
       });
       btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
     });
-
-    /* -- Parallax léger du hero au mouvement de souris -- */
-    var heroReel = document.querySelector('.hero-reel');
-    var heroSection = document.querySelector('.hero');
-    if (heroReel && heroSection) {
-      heroSection.addEventListener('mousemove', function (e) {
-        var r = heroSection.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        heroReel.style.transform = 'rotateX(' + (py * -6).toFixed(2) + 'deg) rotateY(' + (px * 10).toFixed(2) + 'deg)';
-      });
-      heroSection.addEventListener('mouseleave', function () { heroReel.style.transform = ''; });
-    }
   }
 
 });

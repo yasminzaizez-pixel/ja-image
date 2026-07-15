@@ -88,44 +88,54 @@ ACTIVE_PARENT = {
 def reel_svg(extra_class=""):
     cls = f"reel reel--spin {extra_class}".strip()
     return f"""<svg class="{cls}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="50" cy="50" r="46" fill="var(--noir-salle-2)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="50" cy="50" r="13" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="50" cy="50" r="4" fill="var(--or-projecteur)"/>
-  <circle cx="50" cy="19" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="76.8" cy="34.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="76.8" cy="65.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="50" cy="81" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="23.2" cy="65.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
-  <circle cx="23.2" cy="34.5" r="9" fill="var(--noir-salle)" stroke="var(--or-projecteur)" stroke-width="3.5"/>
+  <circle cx="50" cy="50" r="46" fill="var(--noir-2)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="50" cy="50" r="13" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="50" cy="50" r="4" fill="var(--or)"/>
+  <circle cx="50" cy="19" r="9" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="76.8" cy="34.5" r="9" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="76.8" cy="65.5" r="9" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="50" cy="81" r="9" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="23.2" cy="65.5" r="9" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
+  <circle cx="23.2" cy="34.5" r="9" fill="var(--noir)" stroke="var(--or)" stroke-width="3.5"/>
 </svg>"""
 
 
-def hero_reel(photo_keys):
-    """Bobine avec un ruban de pellicule (vraies photos) qui s'en échappe en éventail.
-    Toujours dans le flux de la hero — ne dépend d'aucune largeur d'écran."""
-    import math
+def projector_svg():
+    """Silhouette de projecteur à double bobine, pour l'intro."""
+    return """<svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50 140 L68 112 L88 112 L84 140 Z" fill="var(--noir-2)" stroke="var(--or)" stroke-width="2"/>
+  <path d="M150 140 L146 112 L166 112 L172 140 Z" fill="var(--noir-2)" stroke="var(--or)" stroke-width="2"/>
+  <rect x="42" y="58" width="136" height="58" rx="10" fill="var(--noir-2)" stroke="var(--or)" stroke-width="2.5"/>
+  <g class="reel-top"><circle cx="70" cy="40" r="22" fill="var(--noir-2)" stroke="var(--or)" stroke-width="2.5"/><circle cx="70" cy="40" r="7" fill="none" stroke="var(--or)" stroke-width="2"/></g>
+  <g class="reel-top2"><circle cx="150" cy="40" r="22" fill="var(--noir-2)" stroke="var(--or)" stroke-width="2.5"/><circle cx="150" cy="40" r="7" fill="none" stroke="var(--or)" stroke-width="2"/></g>
+  <g class="lens-glow"><circle cx="185" cy="87" r="19" fill="var(--noir)" stroke="var(--or)" stroke-width="3"/><circle cx="185" cy="87" r="9" fill="var(--or)"/></g>
+</svg>"""
+
+
+def wheel3d_section(photo_keys, eyebrow="Notre bobine", title="Faites tourner l'objectif", lead="Glissez, cliquez ou touchez pour parcourir nos images en 3D."):
+    """Bobine interactive : anneau de vraies photos en 3D, pilotable au clic/glisser/toucher."""
     n = len(photo_keys)
-    r_start, r_end = 80, 258
-    a_start, a_end = 190, 253
-    size_start, size_end = 56, 90
-    frames = []
-    for i, key in enumerate(photo_keys):
-        t = i / (n - 1)
-        r = r_start + (r_end - r_start) * t
-        a = math.radians(a_start + (a_end - a_start) * t)
-        x = r * math.cos(a)
-        y = r * math.sin(a)
-        size = size_start + (size_end - size_start) * t
-        rot = math.degrees(a) + 90
-        frames.append(
-            f'<div class="hero-reel__frame" style="'
-            f'--x:{x:.1f}px; --y:{y:.1f}px; --rot:{rot:.1f}deg; --size:{size:.0f}px; --i:{i};">'
-            f'<img src="{IMG[key]}" alt=""></div>'
-        )
-    return f"""<div class="hero-reel">
-  <div class="hero-reel__frames">{"".join(frames)}</div>
-  <div class="hero-reel__hub">{reel_svg()}</div>
-</div>"""
+    step = 360 / n
+    items = "".join(
+        f'<div class="wheel3d__item" style="--angle:{i*step:.1f}deg"><img src="{IMG[key]}" alt="" draggable="false"></div>'
+        for i, key in enumerate(photo_keys)
+    )
+    return f"""<section class="wheel-section reveal">
+  <div class="mesh-glow"></div>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      <p>{lead}</p>
+    </div>
+    <div class="wheel3d">
+      <div class="wheel3d__stage">
+        <div class="wheel3d__ring" id="wheel3d-ring">{items}</div>
+      </div>
+    </div>
+    <p class="wheel3d__hint">← glissez ou cliquez pour tourner →</p>
+  </div>
+</section>"""
 
 
 def head(title, desc):
@@ -137,7 +147,7 @@ def head(title, desc):
 <link rel="icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v={ASSET_V}">
 </head>"""
 
@@ -213,19 +223,17 @@ def footer():
 
 INTRO = f"""<div class="intro">
   <div class="intro__flicker"></div>
-  <div class="intro__beam"></div>
   <div class="intro__grain"></div>
+  <div class="intro__rig">{projector_svg()}</div>
+  <div class="intro__beam"></div>
+  <div class="intro__dust"></div>
   <div class="intro__content">
-    <div class="intro__reel-row">
-      {reel_svg()}
-      <div class="intro__stage">
-        <div class="intro__flash"></div>
-        <img class="piece piece--black" src="assets/fig_black.png" alt="">
-        <img class="piece piece--red" src="assets/fig_red.png" alt="">
-        <img class="piece piece--yellow" src="assets/fig_yellow.png" alt="">
-        <img class="piece piece--purple" src="assets/fig_purple.png" alt="JA IMAGE">
-      </div>
-      {reel_svg()}
+    <div class="intro__stage">
+      <div class="intro__flash"></div>
+      <img class="piece piece--black" src="assets/fig_black.png" alt="">
+      <img class="piece piece--red" src="assets/fig_red.png" alt="">
+      <img class="piece piece--yellow" src="assets/fig_yellow.png" alt="">
+      <img class="piece piece--purple" src="assets/fig_purple.png" alt="JA IMAGE">
     </div>
     <div class="intro__tagline">Cinéma malien &amp; africain · Bamako</div>
     <div class="intro__bar"></div>
@@ -254,7 +262,7 @@ def page(filename, title, desc, body, with_intro=False):
 
 def pagehero(eyebrow, title_html, lead):
     return f"""<section class="pagehero">
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
+  <div class="mesh-glow"></div>
   <div class="container">
     <p class="eyebrow">{eyebrow}</p>
     <h1>{title_html}</h1>
@@ -265,19 +273,9 @@ def pagehero(eyebrow, title_html, lead):
 # ================================================================ ACCUEIL ==
 
 def build_index():
-    strip_photos = ['camera_training','classroom_camop','outdoor_filming','hilltop_camera',
-                     'students_qa','camera_mentorship','classroom_wide1','speaker_mic']
-    strip_frames = "".join(f'<div class="reel-strip__frame"><img src="{IMG[k]}" alt=""></div>' for k in strip_photos * 2)
-    reel_strip = f"""<div class="reel-strip">
-  {reel_svg()}
-  <div class="reel-strip__window"><div class="reel-strip__track">{strip_frames}</div></div>
-</div>"""
     body = f"""
-{reel_strip}
 <section class="hero">
   <div class="hero__bg" style="background:linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.55) 55%, #0c0c10 100%), url('{IMG['group_library']}') center/cover no-repeat;"></div>
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
-  {hero_reel(['camera_training','classroom_camop','outdoor_filming','students_qa','hilltop_camera'])}
   <div class="container hero__inner">
     <p class="eyebrow">Association JA IMAGE — Cinéma malien &amp; africain, Bamako</p>
     <h1><span class="word" style="animation-delay:.5s">L'ÉCRAN</span> <span class="word" style="animation-delay:.62s">COMME</span> <span class="word" style="animation-delay:.74s"><em>ÉCOLE</em></span></h1>
@@ -288,6 +286,8 @@ def build_index():
     </div>
   </div>
 </section>
+
+{wheel3d_section(['camera_training','classroom_camop','outdoor_filming','students_qa','hilltop_camera','speaker_mic','classroom_wide1','camera_mentorship'])}
 
 <div class="marquee">
   <div class="marquee__track">
@@ -381,7 +381,7 @@ def build_index():
 </section>
 
 <section class="cta-band reveal">
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
+  <div class="mesh-glow"></div>
   <div class="container">
     <h2>Vous voulez apprendre, projeter ou soutenir ?</h2>
     <p style="max-width:50ch;margin:0 auto 28px;opacity:.9;">Rejoignez une association qui croit que le cinéma se pratique autant qu'il se regarde.</p>
@@ -473,7 +473,7 @@ def build_association():
 </section>
 
 <section class="cta-band reveal">
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
+  <div class="mesh-glow"></div>
   <div class="container">
     <h2>Envie de nous rejoindre ?</h2>
     <a href="contact.html" class="btn btn--primary" style="margin-top:10px;">Nous contacter</a>
@@ -547,7 +547,7 @@ def build_programmes():
 </section>
 
 <section class="cta-band reveal">
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
+  <div class="mesh-glow"></div>
   <div class="container">
     <h2>Je m'inscris à un programme</h2>
     <a href="ressources.html" class="btn btn--primary" style="margin-top:10px;">Voir l'espace autodidactes</a>
@@ -620,7 +620,7 @@ def build_formation():
 </section>
 
 <section class="cta-band reveal">
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
+  <div class="mesh-glow"></div>
   <div class="container">
     <h2>Réserver ma place</h2>
     <a href="ressources.html" class="btn btn--primary" style="margin-top:10px;">Faire ma demande</a>
@@ -977,7 +977,7 @@ def build_initiatives():
 </section>
 
 <section class="cta-band reveal">
-  <div class="mesh-bg"><span></span><span></span><span></span></div>
+  <div class="mesh-glow"></div>
   <div class="container">
     <h2>Une idée, un lieu, un profil à proposer ?</h2>
     <a href="contact.html" class="btn btn--primary" style="margin-top:10px;">Nous écrire</a>
