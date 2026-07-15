@@ -31,16 +31,30 @@ IMG = {
 }
 LOGO_CCS = 'assets/photos/logo_ccs.png'
 
-FORM_EMAIL = "contact@jaimage.ml"  # placeholder — à remplacer par la vraie adresse
+# Informations réelles — extraites du document de présentation de l'association
+ORG = {
+    "nom_legal": "Association Culturelle JA",
+    "nom_marque": "JA IMAGE",
+    "devise": "Former, créer, inspirer",
+    "slogan": "Cultivons les talents, partageons les histoires",
+    "fondation": "2020",
+    "adresse": "Lafiabougou, Rue 352, Porte 432 — Commune IV, Bamako, Mali",
+    "telephone": "+223 74 60 91 09",
+    "telephone_href": "+22374609109",
+}
+
+FORM_EMAIL = "contact@jaimage.ml"  # placeholder — à remplacer par la vraie adresse (à confirmer avec Zaide, voir note)
 
 # Nav complète (utilisée pour le pied de page / sitemap)
 NAV = [
     ("index.html", "Accueil"),
     ("association.html", "Association"),
+    ("festival.html", "Festival Cinéastes Autodidactes"),
+    ("concours.html", "Ciné Court School"),
     ("programmes.html", "Programmes"),
     ("formation.html", "Formation"),
     ("ressources.html", "Ressources"),
-    ("concours.html", "Ciné Court School"),
+    ("initiatives.html", "Nos initiatives"),
     ("actualites.html", "Actualités"),
     ("galerie.html", "Galerie"),
     ("partenaires.html", "Partenaires"),
@@ -53,16 +67,18 @@ NAV_TOP = [
     ("index.html", "Accueil"),
     ("association.html", "Association"),
     ("programmes.html", "Programmes"),
+    ("festival.html", "Festival"),
     ("concours.html", "Ciné Court School"),
     ("actualites.html", "Actualités"),
-    ("galerie.html", "Galerie"),
 ]
 
 # Rattache une page secondaire à son onglet parent pour l'état actif
 ACTIVE_PARENT = {
     "formation.html": "programmes.html",
     "ressources.html": "programmes.html",
+    "initiatives.html": "programmes.html",
     "partenaires.html": "association.html",
+    "galerie.html": "actualites.html",
 }
 
 # ------------------------------------------------------------- fragments ---
@@ -88,7 +104,7 @@ def header(active):
         classes = []
         if href == effective:
             classes.append("active")
-        if href == "concours.html":
+        if href in ("concours.html", "festival.html"):
             classes.append("flagship")
         cls = f' class="{" ".join(classes)}"' if classes else ''
         links.append(f'<a href="{href}"{cls}>{label}</a>')
@@ -114,11 +130,13 @@ def footer():
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="assets/logo.png" alt="JA IMAGE">
-        <p>Association pour la promotion du cinéma africain et international, et l'accompagnement des cinéastes autodidactes. Basée à Bamako, Mali.</p>
+        <p>{ORG['nom_legal']} — {ORG['nom_marque']}, fondée en {ORG['fondation']}. Promotion du cinéma, de la culture et de la jeunesse au Mali ; formation et professionnalisation des cinéastes autodidactes.</p>
+        <p style="font-style:italic;opacity:.75;margin-top:10px;">« {ORG['devise']} »<br>{ORG['slogan']}</p>
       </div>
       <div>
         <h4>Association</h4>
         <a href="association.html">Qui sommes-nous</a>
+        <a href="festival.html">Festival Cinéastes Autodidactes</a>
         <a href="partenaires.html">Partenaires</a>
         <a href="actualites.html">Actualités</a>
         <a href="galerie.html">Galerie</a>
@@ -129,18 +147,19 @@ def footer():
         <a href="formation.html">Formation</a>
         <a href="ressources.html">Espace autodidactes</a>
         <a href="concours.html">Ciné Court School</a>
+        <a href="initiatives.html">Nos initiatives</a>
       </div>
       <div>
         <h4>Contact</h4>
-        <a href="#">Bamako, Mali</a>
-        <a href="tel:+22374609109">+223 74 60 91 09</a>
+        <a href="contact.html">{ORG['adresse']}</a>
+        <a href="tel:{ORG['telephone_href']}">{ORG['telephone']}</a>
         <a href="mailto:{FORM_EMAIL}">{FORM_EMAIL}</a>
         <a href="#">Facebook · Instagram</a>
       </div>
     </div>
     <div class="bogolan-band" style="margin-bottom:24px;"></div>
     <div class="footer-bottom">
-      <span>© <span class="year"></span> JA IMAGE — Bamako, Mali</span>
+      <span>© <span class="year"></span> {ORG['nom_legal']} ({ORG['nom_marque']}) — Bamako, Mali</span>
       <span>Contenu provisoire — site en construction</span>
     </div>
   </div>
@@ -225,6 +244,7 @@ def build_index():
     </div>
     <div>
       <p>JA IMAGE réunit un public curieux et des cinéastes en apprentissage autour d'une même idée : le cinéma se transmet aussi par la pratique, la projection et la rencontre — pas seulement par les bancs d'une école.</p>
+      <p style="font-family:var(--label);letter-spacing:.08em;text-transform:uppercase;font-size:14px;color:var(--rouge-rideau);margin-top:18px;">« {ORG['devise']} » — {ORG['slogan']}</p>
       <div class="stats" style="margin-top:32px;">
         <div class="stat"><b data-count="120" data-suffix="+">0</b><span>Autodidactes accompagnés</span></div>
         <div class="stat"><b data-count="40">0</b><span>Projections organisées</span></div>
@@ -261,7 +281,7 @@ def build_index():
         <div class="imgcard"><img src="{IMG['camera_training']}" alt="Tournage"><div class="imgcard__label"><span class="tag">Ciné-club</span><h3>Séance mensuelle de courts-métrages africains</h3></div></div>
       </div>
       <div>
-        <div class="imgcard"><img src="{IMG['classroom_flipchart']}" alt="Atelier montage"><div class="imgcard__label"><span class="tag">Atelier</span><h3>Initiation au montage pour débutants</h3></div></div>
+        <a href="festival.html"><div class="imgcard"><img src="{IMG['certificate_ceremony']}" alt="Festival Cinéastes Autodidactes"><div class="imgcard__label"><span class="tag">Festival annuel</span><h3>Festival Cinéastes Autodidactes</h3></div></div></a>
       </div>
       <div>
         <a href="concours.html"><div class="imgcard"><img src="{IMG['classroom_banner']}" alt="Ciné Court School"><div class="imgcard__label"><span class="tag">Concours annuel</span><h3>Ciné Court School — le concours des élèves cinéastes</h3></div></div></a>
@@ -315,17 +335,19 @@ def build_index():
 
 def build_association():
     body = f"""
-{pagehero("Générique", "QUI SOMMES-<em>NOUS</em>", "JA IMAGE est une association basée à Bamako, née de la conviction que le cinéma se transmet aussi hors des écoles.")}
+{pagehero("Générique", "QUI SOMMES-<em>NOUS</em>", f"{ORG['nom_legal']} — {ORG['nom_marque']} — est une association basée à Bamako, fondée en {ORG['fondation']}, née de la conviction que le cinéma se transmet aussi hors des écoles.")}
 
 <section class="reveal">
   <div class="container two-col">
     <img src="{IMG['adults_table']}" alt="Réunion de l'équipe JA IMAGE">
     <div>
-      <p class="eyebrow">Notre histoire</p>
+      <p class="eyebrow">Fondation &amp; mission</p>
       <h2 style="font-size:34px;">Une salle, une caméra, une communauté</h2>
-      <p>JA IMAGE est née à Bamako de la rencontre entre passionnés de cinéma et jeunes cinéastes autodidactes, convaincus que la caméra peut s'apprendre autrement qu'à l'école. Depuis, l'association organise des projections, anime des ateliers et accompagne celles et ceux qui apprennent à raconter des histoires par l'image.</p>
+      <p>Créée en {ORG['fondation']}, {ORG['nom_legal']} œuvre pour la promotion du cinéma, de la culture et de la jeunesse au Mali. Elle soutient la formation et la professionnalisation des cinéastes autodidactes à travers des programmes de formation, de production et de diffusion.</p>
       <p>Ce qui nous rassemble : la conviction qu'un regard curieux et une caméra suffisent pour commencer — dans la lignée d'un pays où l'on raconte des histoires depuis bien avant l'invention de la caméra.</p>
       <p class="credit-line">Le Mali a donné au cinéma africain des cinéastes majeurs, comme Souleymane Cissé — et un rendez-vous continental, le FESPACO à Ouagadougou, qui continue d'inspirer notre travail au quotidien.</p>
+      <p style="margin-top:22px;font-family:var(--display);font-size:22px;text-transform:none;color:var(--rouge-rideau);">« {ORG['devise']} »</p>
+      <p style="font-family:var(--label);letter-spacing:.08em;text-transform:uppercase;font-size:14px;color:var(--gris-fonce);">{ORG['slogan']}</p>
     </div>
   </div>
 </section>
@@ -333,18 +355,33 @@ def build_association():
 <section class="section--dark reveal">
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">Notre mission</p>
+      <p class="eyebrow">Nos objectifs</p>
       <h2>Trois engagements</h2>
     </div>
     <div class="grid grid--3">
-      <div class="card"><span class="num">01</span><h3>Promouvoir</h3><p>Faire connaître le cinéma africain et les cinémas du monde auprès du public malien, à travers des projections accessibles.</p></div>
-      <div class="card"><span class="num">02</span><h3>Accompagner</h3><p>Offrir aux autodidactes un cadre d'apprentissage concret, en dehors des circuits de formation classiques.</p></div>
-      <div class="card"><span class="num">03</span><h3>Relier</h3><p>Créer des espaces de rencontre entre cinéastes, publics, institutions et partenaires.</p></div>
+      <div class="card"><span class="num">01</span><h3>Formation</h3><p>Offrir des formations de qualité couvrant tous les aspects de la réalisation cinématographique.</p></div>
+      <div class="card"><span class="num">02</span><h3>Promotion</h3><p>Organiser un festival annuel dédié aux cinéastes autodidactes — le Festival Cinéastes Autodidactes.</p></div>
+      <div class="card"><span class="num">03</span><h3>Soutien</h3><p>Fournir un appui technique, logistique et financier à la production de films indépendants.</p></div>
     </div>
   </div>
 </section>
 
 <section class="reveal">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Sur le terrain</p>
+      <h2>Actions concrètes</h2>
+    </div>
+    <div class="grid grid--4">
+      <div class="card"><h3 style="font-size:18px;">Formations intensives</h3><p>Organisées dans plusieurs régions du Mali, pas seulement à Bamako.</p></div>
+      <div class="card"><h3 style="font-size:18px;">Banque d'images &amp; répertoire de tournage</h3><p>Deux outils en préparation pour les cinéastes et les productions au Mali.</p></div>
+      <div class="card"><h3 style="font-size:18px;">Soutien à la production</h3><p>Accompagnement de films indépendants portés par des autodidactes.</p></div>
+      <div class="card"><h3 style="font-size:18px;">Événements culturels</h3><p>Projections publiques et événements ouverts à tous, à Bamako.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--tinted reveal">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Ce qui nous guide</p>
@@ -359,7 +396,7 @@ def build_association():
   </div>
 </section>
 
-<section class="section--tinted reveal">
+<section class="reveal">
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Sur le terrain</p>
@@ -382,15 +419,30 @@ def build_association():
   </div>
 </section>
 """
-    page("association.html", "Association", "Qui sommes-nous : histoire, mission, valeurs et équipe de l'association JA IMAGE à Bamako.", body)
+    page("association.html", "Association", f"{ORG['nom_legal']} ({ORG['nom_marque']}) : histoire, mission, objectifs et équipe de l'association, fondée en {ORG['fondation']} à Bamako.", body)
 
 # ============================================================= PROGRAMMES ==
 
 def build_programmes():
     body = f"""
-{pagehero("Au programme", "NOS <em>PROGRAMMES</em>", "Trois façons de participer à la vie de JA IMAGE, du simple spectateur au cinéaste en formation.")}
+{pagehero("Nos programmes", "NOS <em>PROGRAMMES</em>", "Quatre façons de participer à la vie de JA IMAGE, du simple spectateur au cinéaste en production.")}
 
 <section class="reveal">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Vue d'ensemble</p>
+      <h2>Formation, production, écriture, financement</h2>
+    </div>
+    <div class="grid grid--4">
+      <div class="card"><span class="num">01</span><h3>La formation</h3><p>Un programme complet pour développer les compétences techniques et artistiques : scénario, réalisation, montage, son — pour débutants et niveaux avancés.</p><p style="margin-top:14px;"><a href="formation.html" class="btn btn--outline" style="padding:9px 16px;font-size:13px;">Voir la formation</a></p></div>
+      <div class="card"><span class="num">02</span><h3>La production</h3><p>Transformer les idées en réalisations cinématographiques de qualité, de la conception à la postproduction, avec les technologies et les talents locaux.</p><p style="margin-top:14px;"><a href="contact.html" class="btn btn--outline" style="padding:9px 16px;font-size:13px;">En discuter</a></p></div>
+      <div class="card"><span class="num">03</span><h3>Résidence d'écriture</h3><p>Un espace calme et propice à la création scénaristique, avec mentorat, ateliers, consultations individuelles et rencontres avec des professionnels.</p><p style="margin-top:14px;"><a href="contact.html" class="btn btn--outline" style="padding:9px 16px;font-size:13px;">Candidater</a></p></div>
+      <div class="card"><span class="num">04</span><h3>Fonds de création</h3><p>Un soutien financier à l'écriture, à la production et à la postproduction des cinéastes autodidactes — cinéma, documentaire, court métrage, fiction.</p><p style="margin-top:14px;"><a href="contact.html" class="btn btn--outline" style="padding:9px 16px;font-size:13px;">Déposer un dossier</a></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--tinted reveal">
   <div class="container">
     <div class="grid grid--3">
       <div>
@@ -424,6 +476,15 @@ def build_programmes():
   </div>
 </section>
 
+<section class="reveal">
+  <div class="container" style="text-align:center;">
+    <p class="eyebrow" style="justify-content:center;">Et bientôt</p>
+    <h2 style="font-size:28px;">Répertoire de tournage, guide des cinéastes, banque d'images</h2>
+    <p style="max-width:56ch;margin:0 auto 24px;color:var(--gris-fonce);">Trois outils en préparation pour toute la communauté du cinéma malien.</p>
+    <a href="initiatives.html" class="btn btn--outline">Découvrir nos initiatives</a>
+  </div>
+</section>
+
 <section class="cta-band reveal">
   <div class="container">
     <h2>Je m'inscris à un programme</h2>
@@ -431,7 +492,7 @@ def build_programmes():
   </div>
 </section>
 """
-    page("programmes.html", "Programmes", "Ciné-clubs, résidences, ateliers et accompagnement individualisé proposés par JA IMAGE.", body)
+    page("programmes.html", "Programmes", "Formation, production, résidence d'écriture et fonds de création proposés par JA IMAGE aux cinéastes autodidactes.", body)
 
 # ============================================================== FORMATION ==
 
@@ -682,10 +743,11 @@ def build_contact():
     <div>
       <p class="eyebrow">Nos coordonnées</p>
       <h2 style="font-size:32px;">Venez nous voir</h2>
-      <p style="color:var(--gris-fonce);">Adresse : Bamako, Mali <em>(adresse précise à confirmer)</em><br>
-      Téléphone : +223 74 60 91 09<br>
-      Email : {FORM_EMAIL}<br>
+      <p style="color:var(--gris-fonce);">Adresse : {ORG['adresse']}<br>
+      Téléphone : {ORG['telephone']}<br>
+      Email : {FORM_EMAIL} <em>(à confirmer)</em><br>
       Réseaux : Facebook · Instagram</p>
+      <p style="margin-top:16px;font-style:italic;color:var(--gris-fonce);">« {ORG['devise']} » — {ORG['slogan']}</p>
       <img src="{IMG['landscape']}" alt="Bamako, Mali" style="border-radius:2px;margin-top:24px;">
     </div>
     <form class="form-panel" action="https://formsubmit.co/{FORM_EMAIL}" method="POST">
@@ -711,6 +773,154 @@ def build_contact():
 </section>
 """
     page("contact.html", "Contact", "Contactez l'association JA IMAGE à Bamako : adhésion, programmes, partenariats.", body)
+
+# ==================================================== FESTIVAL AUTODIDACTES ==
+
+def build_festival():
+    body = f"""
+{pagehero("Événement annuel", "FESTIVAL CINÉASTES <em>AUTODIDACTES</em>", f"Organisé par {ORG['nom_legal']}, le festival met en lumière les talents émergents du cinéma malien — une vitrine pour les œuvres des cinéastes autodidactes et un espace d'échange avec les professionnels.")}
+
+<section class="reveal">
+  <div class="container two-col">
+    <img src="{IMG['certificate_ceremony']}" alt="Cérémonie du festival">
+    <div>
+      <p class="eyebrow">Présentation</p>
+      <h2 style="font-size:32px;">La vitrine du cinéma autodidacte malien</h2>
+      <p>Le Festival Cinéastes Autodidactes est un événement annuel qui met en lumière les talents émergents du cinéma malien. Il constitue une vitrine pour les œuvres réalisées par des cinéastes autodidactes et un espace d'échange entre professionnels et passionnés.</p>
+      <p style="font-family:var(--display);font-size:20px;text-transform:none;color:var(--rouge-rideau);">« {ORG['devise']} »</p>
+    </div>
+  </div>
+</section>
+
+<section class="section--dark reveal">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Objectifs</p>
+      <h2>Ce que porte le festival</h2>
+    </div>
+    <div class="grid grid--3">
+      <div class="card"><span class="num">01</span><h3>Valoriser</h3><p>La créativité des cinéastes autodidactes, sur scène et à l'écran.</p></div>
+      <div class="card"><span class="num">02</span><h3>Promouvoir</h3><p>La diversité culturelle et artistique du Mali auprès du public et des professionnels.</p></div>
+      <div class="card"><span class="num">03</span><h3>Encourager</h3><p>La professionnalisation du secteur cinématographique malien.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Programmation</p>
+      <h2>Au fil du festival</h2>
+    </div>
+    <div class="grid grid--4">
+      <div class="card"><h3 style="font-size:18px;">Projections</h3><p>Courts et longs métrages de cinéastes autodidactes.</p></div>
+      <div class="card"><h3 style="font-size:18px;">Masterclass</h3><p>Ateliers de formation animés par des professionnels.</p></div>
+      <div class="card"><h3 style="font-size:18px;">Rencontres</h3><p>Panels et échanges entre cinéastes, publics et institutions.</p></div>
+      <div class="card"><h3 style="font-size:18px;">Cérémonie</h3><p>Remise des prix devant le public et le jury.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--tinted reveal">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Compétition</p>
+      <h2>Les films en compétition</h2>
+      <p>Évalués par un jury composé de professionnels du cinéma.</p>
+    </div>
+    <div class="grid grid--4">
+      <div class="card"><span class="num">Prix</span><h3>Meilleure réalisation</h3><p>Récompense la mise en scène d'ensemble du film.</p></div>
+      <div class="card"><span class="num">Prix</span><h3>Meilleur scénario</h3><p>Récompense l'écriture et la construction du récit.</p></div>
+      <div class="card"><span class="num">Prix</span><h3>Meilleure image</h3><p>Récompense la direction photo et le cadrage.</p></div>
+      <div class="card"><span class="num">Prix</span><h3>Prix du public</h3><p>Voté par les spectateurs lors des projections.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="container">
+    <div class="grid grid--3">
+      <div class="imgcard"><img src="{IMG['outdoor_filming']}" alt="Tournage autodidacte"><div class="imgcard__label"><span class="tag">Coulisses</span><h3>Sur le tournage</h3></div></div>
+      <div class="imgcard"><img src="{IMG['speaker_mic']}" alt="Rencontre professionnelle"><div class="imgcard__label"><span class="tag">Rencontre</span><h3>Échange avec un cinéaste</h3></div></div>
+      <div class="imgcard"><img src="{IMG['group_library']}" alt="Public du festival"><div class="imgcard__label"><span class="tag">Public</span><h3>Salle comble</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--dark reveal" id="soumettre">
+  <div class="container two-col">
+    <div>
+      <p class="eyebrow">Participer</p>
+      <h2 style="font-size:32px;">Soumettre un film</h2>
+      <p>Cinéaste autodidacte malien, vous avez un court ou un long métrage à présenter ? Dites-nous-en plus, nous revenons vers vous avec les modalités et les dates de la prochaine édition.</p>
+    </div>
+    <form class="form-panel" action="https://formsubmit.co/{FORM_EMAIL}" method="POST">
+      <input type="hidden" name="_subject" value="Soumission de film — Festival Cinéastes Autodidactes">
+      <input type="text" name="_honey" style="display:none">
+      <input type="hidden" name="_captcha" value="false">
+      <div class="form-row">
+        <div class="field"><label for="f-nom">Nom du réalisateur</label><input id="f-nom" name="Nom" type="text" required></div>
+        <div class="field"><label for="f-titre">Titre du film</label><input id="f-titre" name="Titre" type="text" required></div>
+      </div>
+      <div class="field"><label for="f-email">Email</label><input id="f-email" name="Email" type="email" required></div>
+      <div class="field"><label for="f-msg">Présentation du film</label><textarea id="f-msg" name="Message"></textarea></div>
+      <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;">Envoyer ma soumission</button>
+    </form>
+  </div>
+</section>
+"""
+    page("festival.html", "Festival Cinéastes Autodidactes", f"Le Festival Cinéastes Autodidactes, événement annuel de {ORG['nom_legal']} (JA IMAGE), vitrine du cinéma autodidacte malien à Bamako.", body)
+
+# ======================================================== NOS INITIATIVES ==
+
+def build_initiatives():
+    body = f"""
+{pagehero("En préparation", "NOS <em>INITIATIVES</em>", "Trois outils que JA IMAGE construit pour toute la communauté du cinéma malien — cinéastes, techniciens, productions.")}
+
+<section class="reveal">
+  <div class="container">
+    <div class="grid grid--3">
+      <div class="card">
+        <span class="num">Bientôt</span>
+        <h3>Répertoire de cité de tournage</h3>
+        <p>Une base de données complète des lieux de tournage au Mali : paysages naturels, urbains et historiques. Recherche par région, type de décor ou mot-clé, avec photos HD et conditions d'accès pour chaque fiche.</p>
+        <p style="margin-top:14px;color:var(--gris-fonce);"><em>Vous avez un lieu à proposer ?</em> <a href="contact.html">Contactez-nous</a>.</p>
+      </div>
+      <div class="card">
+        <span class="num">Bientôt</span>
+        <h3>Guide des cinéastes du Mali</h3>
+        <p>Un répertoire des réalisateurs, scénaristes, acteurs et techniciens du Mali — un espace de visibilité et de mise en réseau qui facilite les partenariats artistiques et techniques.</p>
+        <p style="margin-top:14px;color:var(--gris-fonce);"><em>Vous êtes cinéaste ?</em> <a href="contact.html">Soumettez votre profil</a>.</p>
+      </div>
+      <div class="card">
+        <span class="num">Bientôt</span>
+        <h3>Banque d'images</h3>
+        <p>Une collection d'images authentiques illustrant la culture, les paysages et la vie quotidienne au Mali, produites par des photographes locaux. Une partie des revenus soutient directement les artistes maliens.</p>
+        <p style="margin-top:14px;color:var(--gris-fonce);"><em>Photographe malien ?</em> <a href="contact.html">Rejoignez le projet</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--dark reveal">
+  <div class="container two-col">
+    <div>
+      <p class="eyebrow">Pourquoi ces outils</p>
+      <h2 style="font-size:32px;">Une infrastructure pour le cinéma malien</h2>
+      <p>Au-delà de la formation et du festival, {ORG['nom_legal']} construit les outils qui manquent au secteur : savoir où tourner, savoir qui appeler, et pouvoir montrer le Mali en images justes.</p>
+    </div>
+    <img src="{IMG['landscape']}" alt="Paysage malien">
+  </div>
+</section>
+
+<section class="cta-band reveal">
+  <div class="container">
+    <h2>Une idée, un lieu, un profil à proposer ?</h2>
+    <a href="contact.html" class="btn btn--primary" style="margin-top:10px;">Nous écrire</a>
+  </div>
+</section>
+"""
+    page("initiatives.html", "Nos initiatives", "Répertoire de tournage, guide des cinéastes et banque d'images : les initiatives à venir de JA IMAGE.", body)
 
 # ========================================================== CINÉ COURT SCHOOL ==
 
@@ -846,9 +1056,11 @@ def build_concours():
 if __name__ == "__main__":
     build_index()
     build_association()
+    build_festival()
     build_programmes()
     build_formation()
     build_ressources()
+    build_initiatives()
     build_concours()
     build_actualites()
     build_galerie()
