@@ -254,6 +254,7 @@ def page(filename, title, desc, body, with_intro=False):
 
 def pagehero(eyebrow, title_html, lead):
     return f"""<section class="pagehero">
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   <div class="container">
     <p class="eyebrow">{eyebrow}</p>
     <h1>{title_html}</h1>
@@ -275,10 +276,11 @@ def build_index():
 {reel_strip}
 <section class="hero">
   <div class="hero__bg" style="background:linear-gradient(180deg, rgba(12,12,16,.35) 0%, rgba(12,12,16,.55) 55%, #0c0c10 100%), url('{IMG['group_library']}') center/cover no-repeat;"></div>
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   {hero_reel(['camera_training','classroom_camop','outdoor_filming','students_qa','hilltop_camera'])}
   <div class="container hero__inner">
     <p class="eyebrow">Association JA IMAGE — Cinéma malien &amp; africain, Bamako</p>
-    <h1>L'ÉCRAN COMME <em>ÉCOLE</em></h1>
+    <h1><span class="word" style="animation-delay:.5s">L'ÉCRAN</span> <span class="word" style="animation-delay:.62s">COMME</span> <span class="word" style="animation-delay:.74s"><em>ÉCOLE</em></span></h1>
     <p class="lead">Des griots d'hier aux courts-métrages d'aujourd'hui : JA IMAGE fait vivre le cinéma malien et africain à Bamako, et accompagne les cinéastes autodidactes qui apprennent à cadrer, raconter et monter par eux-mêmes.</p>
     <div class="btn-row">
       <a href="programmes.html" class="btn btn--primary">Découvrir nos programmes</a>
@@ -379,6 +381,7 @@ def build_index():
 </section>
 
 <section class="cta-band reveal">
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   <div class="container">
     <h2>Vous voulez apprendre, projeter ou soutenir ?</h2>
     <p style="max-width:50ch;margin:0 auto 28px;opacity:.9;">Rejoignez une association qui croit que le cinéma se pratique autant qu'il se regarde.</p>
@@ -470,6 +473,7 @@ def build_association():
 </section>
 
 <section class="cta-band reveal">
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   <div class="container">
     <h2>Envie de nous rejoindre ?</h2>
     <a href="contact.html" class="btn btn--primary" style="margin-top:10px;">Nous contacter</a>
@@ -543,6 +547,7 @@ def build_programmes():
 </section>
 
 <section class="cta-band reveal">
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   <div class="container">
     <h2>Je m'inscris à un programme</h2>
     <a href="ressources.html" class="btn btn--primary" style="margin-top:10px;">Voir l'espace autodidactes</a>
@@ -615,6 +620,7 @@ def build_formation():
 </section>
 
 <section class="cta-band reveal">
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   <div class="container">
     <h2>Réserver ma place</h2>
     <a href="ressources.html" class="btn btn--primary" style="margin-top:10px;">Faire ma demande</a>
@@ -971,6 +977,7 @@ def build_initiatives():
 </section>
 
 <section class="cta-band reveal">
+  <div class="mesh-bg"><span></span><span></span><span></span></div>
   <div class="container">
     <h2>Une idée, un lieu, un profil à proposer ?</h2>
     <a href="contact.html" class="btn btn--primary" style="margin-top:10px;">Nous écrire</a>

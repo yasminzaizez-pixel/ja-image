@@ -145,4 +145,72 @@ document.addEventListener('DOMContentLoaded', function () {
     el.textContent = new Date().getFullYear();
   });
 
+  /* ---- Effets premium : réservés aux pointeurs fins (souris), jamais au tactile ---- */
+  var canHover = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (canHover && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+
+    /* -- Curseur personnalisé -- */
+    var dot = document.createElement('div');
+    dot.className = 'cursor-dot';
+    var ring = document.createElement('div');
+    ring.className = 'cursor-ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+    var mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', function (e) {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+      document.body.classList.add('cursor-ready');
+    });
+    (function animateRing () {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+      requestAnimationFrame(animateRing);
+    })();
+    document.querySelectorAll('a, button, .card, .imgcard, .tag').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { ring.classList.add('hover'); });
+      el.addEventListener('mouseleave', function () { ring.classList.remove('hover'); });
+    });
+
+    /* -- Inclinaison 3D au survol (cartes, images, partenaires) -- */
+    var tiltEls = document.querySelectorAll('.card, .imgcard, .partner-card');
+    tiltEls.forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        var rotX = (py * -8).toFixed(2);
+        var rotY = (px * 10).toFixed(2);
+        el.style.transform = 'perspective(900px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-6px) scale(1.015)';
+      });
+      el.addEventListener('mouseleave', function () {
+        el.style.transform = '';
+      });
+    });
+
+    /* -- Boutons magnétiques -- */
+    document.querySelectorAll('.btn').forEach(function (btn) {
+      btn.addEventListener('mousemove', function (e) {
+        var r = btn.getBoundingClientRect();
+        var mx2 = (e.clientX - r.left - r.width / 2) * 0.28;
+        var my2 = (e.clientY - r.top - r.height / 2) * 0.35;
+        btn.style.transform = 'translate(' + mx2 + 'px,' + my2 + 'px)';
+      });
+      btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
+    });
+
+    /* -- Parallax léger du hero au mouvement de souris -- */
+    var heroReel = document.querySelector('.hero-reel');
+    var heroSection = document.querySelector('.hero');
+    if (heroReel && heroSection) {
+      heroSection.addEventListener('mousemove', function (e) {
+        var r = heroSection.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        heroReel.style.transform = 'rotateX(' + (py * -6).toFixed(2) + 'deg) rotateY(' + (px * 10).toFixed(2) + 'deg)';
+      });
+      heroSection.addEventListener('mouseleave', function () { heroReel.style.transform = ''; });
+    }
+  }
+
 });
